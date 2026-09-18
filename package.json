@@ -4,7 +4,6 @@
   "description": "Automark is a marketing and sales automation platform",
   "author": "Themefisher",
   "license": "MIT",
-  "packageManager": "pnpm@11.9.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"node scripts/themeGenerator.js --watch\" \"astro dev\"",
