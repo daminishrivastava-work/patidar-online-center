@@ -134,3 +134,5 @@ Copyright (c) 2016 - Present, Designed & Developed by [Themefisher](https://them
 
 - **Code License:** Released under the [MIT](LICENSE) license.
 - **Image license:** Demonstration purposes only.
+
+- Cloudflare deployment update
