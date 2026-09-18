@@ -1,0 +1,241 @@
+---
+import config from "@/config/config.json";
+import theme from "@/config/theme.json";
+import { plainify } from "@/lib/utils/textConverter";
+import Footer from "@/partials/Footer.astro";
+import Header from "@/partials/Header.astro";
+import "@/styles/main.css";
+import { Font } from "astro:assets";
+import {
+  GoogleTagmanager,
+  GoogleTagmanagerNoscript,
+} from "@digi4care/astro-google-tagmanager";
+
+const fontEntries = Object.entries(theme.fonts.font_family).filter(
+  ([key]) => !key.includes("_type"),
+);
+
+export interface Props {
+  title?: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
+}
+
+const { title, meta_title, description, image, noindex, canonical } =
+  Astro.props;
+
+const pathname = Astro.url.pathname;
+const pathParts = pathname.split('/').filter(p => p);
+const currentLang = (pathParts[0] === 'hi' || pathParts[0] === 'en') ? pathParts[0] : 'en';
+---
+
+<!doctype html>
+<html lang={currentLang}>
+  <head>
+    <!-- google tag manager -->
+    {
+      config.google_tag_manager.enable && (
+        <GoogleTagmanager id={config.google_tag_manager.gtm_id} />
+      )
+    }
+    <link rel="shortcut icon" href={config.site.favicon} />
+    <meta name="theme-name" content="automark-astro" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#000"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    {
+      fontEntries.map(([key]) => {
+        const cssVar = `--font-${key}` as any;
+        return <Font cssVariable={cssVar} preload />;
+      })
+    }
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5"
+    />
+
+    <title>
+      {plainify(meta_title ? meta_title : title ? title : config.site.title)}
+    </title>
+
+    {canonical && <link rel="canonical" href={canonical} item-prop="url" />}
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <meta
+      name="description"
+      content={plainify(
+        description ? description : config.metadata.meta_description,
+      )}
+    />
+
+    <!-- View Transitions removed to avoid conflicts with GSAP/Lenis/Swiper -->
+
+    <meta name="author" content={config.metadata.meta_author} />
+    <meta
+      property="og:title"
+      content={plainify(
+        meta_title ? meta_title : title ? title : config.site.title,
+      )}
+    />
+    <meta
+      property="og:description"
+      content={plainify(
+        description ? description : config.metadata.meta_description,
+      )}
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`}
+    />
+    <meta
+      name="twitter:title"
+      content={plainify(
+        meta_title ? meta_title : title ? title : config.site.title,
+      )}
+    />
+    <meta
+      name="twitter:description"
+      content={plainify(
+        description ? description : config.metadata.meta_description,
+      )}
+    />
+    <meta
+      property="og:image"
+      content={`${config.site.base_url}${
+        image ? image : config.metadata.meta_image
+      }`}
+    />
+    <meta
+      name="twitter:image"
+      content={`${config.site.base_url}${
+        image ? image : config.metadata.meta_image
+      }`}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- GSAP CDN -->
+    <script
+      is:inline
+      defer
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+    <script
+      is:inline
+      defer
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"
+    ></script>
+
+    <!-- LENIS CDN -->
+    <script
+      is:inline
+      defer
+      src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>
+
+    <!-- Main UI interactions -->
+    <script is:inline defer src="/scripts/main.js"></script>
+
+    <!-- Animations (Modules are deferred automatically by browsers) -->
+    <script is:inline type="module" src="/scripts/animations.js"></script>
+  </head>
+  <body>
+    {/* google tag manager noscript */}
+    {
+      config.google_tag_manager.enable && (
+        <GoogleTagmanagerNoscript id={config.google_tag_manager.gtm_id} />
+      )
+    }
+
+    {/* <TwSizeIndicator /> */}
+    <Header />
+    
+    <!-- Language Selection Modal -->
+    <div id="lang-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-dark/80 backdrop-blur-sm">
+      <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl max-w-lg w-[90%] text-center border-t-8 border-secondary relative animate-scale-up">
+        <h2 class="text-3xl font-bold text-primary mb-2">Welcome to Patidar Online Center</h2>
+        <h2 class="text-2xl font-bold text-secondary mb-6">पाटीदार ऑनलाइन सेंटर में आपका स्वागत है</h2>
+        <p class="text-text-light mb-8">Please select your preferred language to continue.<br/>कृपया आगे बढ़ने के लिए अपनी पसंदीदा भाषा चुनें।</p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button id="lang-hi-btn" class="btn bg-secondary hover:bg-secondary/90 text-white text-xl py-3 px-8 rounded-xl shadow-md transition-transform hover:scale-105 cursor-pointer border-2 border-secondary">
+            हिंदी
+          </button>
+          <button id="lang-en-btn" class="btn bg-primary hover:bg-primary/90 text-white text-xl py-3 px-8 rounded-xl shadow-md transition-transform hover:scale-105 cursor-pointer border-2 border-primary">
+            English
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <main id="main-content" class="overflow-x-hidden md:overflow-x-auto">
+      <slot />
+    </main>
+    <Footer />
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const storedLang = localStorage.getItem('lang');
+        const currentPath = window.location.pathname;
+        
+        // Hide modal if we are on the root redirect page
+        if (currentPath === '/') {
+          document.getElementById('lang-modal')?.classList.add('hidden');
+          document.getElementById('lang-modal')?.classList.remove('flex');
+        } else if (!storedLang) {
+          // Only show popup if NO language has been selected yet
+          document.getElementById('lang-modal')?.classList.remove('hidden');
+          document.getElementById('lang-modal')?.classList.add('flex');
+        } else {
+          // Hide popup if language is already selected
+          document.getElementById('lang-modal')?.classList.add('hidden');
+          document.getElementById('lang-modal')?.classList.remove('flex');
+        }
+
+        const btnHi = document.getElementById('lang-hi-btn');
+        const btnEn = document.getElementById('lang-en-btn');
+
+        if(btnHi && btnEn) {
+          btnHi.addEventListener('click', () => {
+            localStorage.setItem('lang', 'hi');
+            if (currentPath.startsWith('/hi/')) {
+              document.getElementById('lang-modal')?.classList.add('hidden');
+            } else {
+              window.location.href = currentPath.replace(/^\/(en|hi)/, '/hi');
+            }
+          });
+
+          btnEn.addEventListener('click', () => {
+            localStorage.setItem('lang', 'en');
+            if (currentPath.startsWith('/en/')) {
+              document.getElementById('lang-modal')?.classList.add('hidden');
+            } else {
+              window.location.href = currentPath.replace(/^\/(en|hi)/, '/en');
+            }
+          });
+        }
+      });
+    </script>
+    <style>
+      .animate-scale-up {
+        animation: scaleUp 0.3s ease-out forwards;
+      }
+      @keyframes scaleUp {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+    </style>
+  </body>
+</html>

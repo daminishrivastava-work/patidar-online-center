@@ -1,0 +1,116 @@
+---
+import Logo from "@/components/Logo.astro";
+import config from "@/config/config.json";
+import { t } from "@/utils/translations";
+
+const { settings } = config;
+const { pathname } = Astro.url;
+
+// Get language from URL (e.g., /en/home -> en)
+const pathParts = pathname.split('/').filter(p => p);
+const currentLang = (pathParts[0] === 'hi' || pathParts[0] === 'en') ? pathParts[0] : 'en';
+
+const menuItems = [
+  { key: "home", url: `/${currentLang}/home` },
+  { key: "forms", url: `/${currentLang}/forms` },
+  { key: "vacancies", url: `/${currentLang}/vacancies` },
+  { key: "services", url: `/${currentLang}/services` },
+  { key: "directory", url: `/${currentLang}/directory` },
+  { key: "notices", url: `/${currentLang}/notices` },
+  { key: "contact", url: `/${currentLang}/contact` }
+];
+
+const toggleLang = currentLang === 'en' ? 'hi' : 'en';
+const toggleLangText = currentLang === 'en' ? 'हिंदी' : 'English';
+// To maintain current page, replace the language part of the URL
+const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
+---
+
+<header
+  class={`header z-50 w-full transition-all duration-300 ${settings.sticky_header ? "fixed top-0" : ""}`}
+>
+  <!-- Top Red Strip matching storefront - Floating look -->
+  <div class="w-full bg-secondary text-white text-sm py-2 shadow-md relative z-40">
+    <div class="container relative flex justify-center items-center">
+      <!-- Language Switcher (Top Left - Blending Highlight) -->
+      <a href={toggleLangUrl} class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center bg-black/20 hover:bg-black/30 text-[#FFD700] font-bold transition-colors py-1 px-3 rounded-md text-xs shadow-inner" onclick="localStorage.setItem('lang', '${toggleLang}')">
+        <span class="mr-1">🌐</span> {toggleLangText}
+      </a>
+      
+      <span class="text-center text-xl md:text-2xl font-black tracking-widest uppercase drop-shadow-md" style="font-family: 'Arial Black', Impact, sans-serif;">
+        PATIDAR ONLINE CENTER
+      </span>
+    </div>
+  </div>
+  
+  <div class="bg-primary shadow-lg relative z-30">
+    <nav class="navbar container relative">
+    <!-- logo -->
+    <div class="order-0">
+      <Logo />
+    </div>
+    <!-- navbar toggler -->
+    <input id="nav-toggle" type="checkbox" class="peer hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1 bg-white/10 backdrop-blur-lg size-12 rounded-xl justify-center ml-2 border border-white/20"
+    >
+      <svg
+        id="show-button"
+        class="h-6 fill-current block peer-checked:hidden"
+        viewBox="0 0 20 20"
+      >
+        <title>Menu Open</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg
+        id="hide-button"
+        class="h-6 fill-current hidden peer-checked:block"
+        viewBox="0 0 20 20"
+      >
+        <title>Menu Close</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    <!-- /navbar toggler -->
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden peer-checked:flex peer-checked:flex-col lg:flex w-full py-6 max-lg:mt-5 lg:order-1 lg:w-auto lg:gap-x-2 lg:py-0 xl:gap-x-4 bg-primary/95 lg:bg-transparent backdrop-blur-lg rounded-2xl px-6 border border-white/10 lg:border-none shadow-lg lg:shadow-none"
+    >
+      {
+        menuItems.map((item) => {
+          // Do not render Contact in the main menu list, we will make it a CTA
+          if (item.key === 'contact') return null;
+          
+          return (
+            <li class="nav-item">
+              <a
+                href={item.url}
+                class={`nav-link block font-semibold text-white/90 hover:text-white hover:bg-white/10 px-4 py-2 rounded-lg transition-colors ${
+                  (pathname === `${item.url}/` || pathname === item.url) &&
+                  "active text-white bg-white/20"
+                }`}
+              >
+                {t(currentLang, `nav.${item.key}`)}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+    
+    <!-- Contact CTA (Top Right) -->
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0 py-2">
+       <a 
+         href={`/${currentLang}/contact`} 
+         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full px-8 py-2.5 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-widest animate-pulse"
+       >
+         {t(currentLang, 'nav.contact')}
+       </a>
+    </div>
+  </nav>
+  </div>
+</header>
+

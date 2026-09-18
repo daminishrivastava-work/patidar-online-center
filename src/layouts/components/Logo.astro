@@ -1,0 +1,50 @@
+---
+import config from "@/config/config.json";
+import ImageMod from "./ImageMod.astro";
+
+const { src }: { src?: string } = Astro.props;
+const {
+  logo,
+  logo_width,
+  logo_height,
+  logo_text,
+  title,
+}: {
+  logo: string;
+  logo_width: any;
+  logo_height: any;
+  logo_text: string;
+  title: string;
+} = config.site;
+
+// Attempt to preserve language in URL
+const { pathname } = Astro.url;
+const pathParts = pathname.split('/').filter(p => p);
+const currentLang = (pathParts[0] === 'hi' || pathParts[0] === 'en') ? pathParts[0] : null;
+const homeUrl = currentLang ? `/${currentLang}/home` : '/';
+---
+
+<a href={homeUrl} class="navbar-brand inline-block text-2xl font-bold text-white">
+  {
+    src || logo ? (
+      <>
+        <ImageMod
+          src={src ? src : logo}
+          class={`inline-block `}
+          width={logo_width.replace("px", "") * 2}
+          height={logo_height.replace("px", "") * 2}
+          alt={title}
+          style={{
+            height: logo_height.replace("px", "") + "px",
+            width: logo_width.replace("px", "") + "px",
+          }}
+          format="webp"
+        />
+      </>
+    ) : logo_text ? (
+      logo_text
+    ) : (
+      title
+    )
+  }
+</a>

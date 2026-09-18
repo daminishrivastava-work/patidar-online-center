@@ -1,0 +1,63 @@
+---
+import Base from "@/layouts/Base.astro";
+import { t } from "@/utils/translations";
+
+import { getCollection } from "astro:content";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'hi' } }
+  ];
+}
+
+const { lang } = Astro.params;
+
+const formsData = await getCollection("forms");
+const forms = formsData.map(f => f.data);
+// Fallback if empty
+if (forms.length === 0) {
+  forms.push(
+    { title: "MP State Scholarship 2026", category: "Scholarship", endDate: "2026-10-31" },
+    { title: "University Admission Form", category: "College", endDate: "2026-09-30" },
+    { title: "Housing Scheme Application", category: "Government Schemes", endDate: "2026-12-15" }
+  );
+}
+---
+
+<Base>
+  <section class="section pt-14">
+    <div class="container text-center mb-12">
+      <h1 class="text-h2 text-primary font-bold">{t(lang, 'nav.forms')}</h1>
+    </div>
+
+    <div class="container">
+      <div class="bg-white rounded-2xl shadow-sm border border-border p-6 overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-light text-dark">
+              <th class="p-4 rounded-tl-lg font-bold">{t(lang, 'common.formName')}</th>
+              <th class="p-4 font-bold">{t(lang, 'common.category')}</th>
+              <th class="p-4 font-bold">{t(lang, 'common.lastDate')}</th>
+              <th class="p-4 rounded-tr-lg font-bold">{t(lang, 'common.action')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {forms.map(form => (
+              <tr class="border-b border-border hover:bg-light/50 transition-colors">
+                <td class="p-4 font-medium text-dark">{form.title}</td>
+                <td class="p-4 text-text-light"><span class="bg-primary-light/10 text-primary px-3 py-1 rounded-full text-xs font-bold">{form.category}</span></td>
+                <td class="p-4 text-secondary font-semibold">{new Date(form.endDate).toLocaleDateString()}</td>
+                <td class="p-4">
+                  <a href={`/${lang}/contact`} class="btn btn-primary btn-sm whitespace-nowrap">
+                    {t(lang, 'common.requestService')}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Base>

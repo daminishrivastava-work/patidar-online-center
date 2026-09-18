@@ -1,0 +1,62 @@
+---
+import Base from "@/layouts/Base.astro";
+import { t } from "@/utils/translations";
+
+import { getCollection } from "astro:content";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'hi' } }
+  ];
+}
+
+const { lang } = Astro.params;
+
+const servicesData = await getCollection("services");
+const services = servicesData.map(f => f.data);
+if (services.length === 0) {
+  services.push(
+    { title: "Aadhaar Services", category: "Government" },
+    { title: "PAN Card", category: "Government" },
+    { title: "Voter ID", category: "Government" },
+    { title: "Ayushman Card", category: "Government" },
+    { title: "Samagra e-KYC", category: "Government" },
+    { title: "Income & Caste Certificate", category: "Government" },
+    { title: "Banking & Money Transfer", category: "Private" },
+    { title: "Digital Signatures", category: "Private" },
+    { title: "Color Print & Photocopy", category: "Private" }
+  );
+}
+---
+
+<Base>
+  <section class="section pt-14">
+    <div class="container text-center mb-12">
+      <h1 class="text-h2 text-primary font-bold">{t(lang, 'nav.services')}</h1>
+      <p class="text-lg text-text-light mt-4">{t(lang, 'common.servicesSubtitle')}</p>
+    </div>
+
+    <div class="container">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map(service => (
+          <div class="bg-white border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+            <div class="absolute top-0 right-0 bg-primary-light/10 text-primary text-xs font-bold px-3 py-1 rounded-bl-lg">
+              {service.category}
+            </div>
+            <h3 class="text-xl font-bold mb-4 mt-2 text-dark">{service.title}</h3>
+            
+            <div class="flex gap-3 mt-6">
+              <a href={`/${lang}/contact`} class="btn btn-primary btn-sm flex-1 text-center">
+                {t(lang, 'common.requestService')}
+              </a>
+              <button class="btn btn-outline btn-sm flex-1 text-primary border-primary hover:bg-primary hover:text-white">
+                {t(lang, 'common.details')}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,40 @@
+{
+  "site": {
+    "title": "Patidar Online Center",
+    "base_url": "https://patidaronline.com",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_width": "200",
+    "logo_height": "50",
+    "logo_text": "Patidar Online Center"
+  },
+  "settings": {
+    "sticky_header": true
+  },
+  "params": {
+    "contact_form_action": "#",
+    "checklist_form_action": "#",
+    "apply_form_action": "#",
+    "copyright": "Copyright &copy; 2026 Patidar Online Center All Rights Reserved",
+    "footer_tagline": "Your trusted center for online forms, government services, and digital solutions.",
+    "footer_email": "patidaronline4u@gmail.com",
+    "footer_phone": "7581977778",
+    "footer_address": "Shop No. 02, Ren Basera Complex, Jaistam Chowk, Shahdol, Madhya Pradesh – 484001"
+  },
+  "navigation_button": {
+    "enable": false,
+    "label": "Get This Template",
+    "link": "#"
+  },
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+  "metadata": {
+    "meta_author": "Patidar Online Center",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Online portal for customers to find government and private online services, forms, vacancies and more."
+  }
+}

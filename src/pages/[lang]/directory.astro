@@ -1,0 +1,57 @@
+---
+import Base from "@/layouts/Base.astro";
+import { t } from "@/utils/translations";
+
+import { getCollection } from "astro:content";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'hi' } }
+  ];
+}
+
+const { lang } = Astro.params;
+
+const websitesData = await getCollection("websites");
+const websites = websitesData.map(f => f.data);
+if (websites.length === 0) {
+  websites.push(
+    { label: "Sampada / E-Registry", url: "https://sampada.mpigr.gov.in/#/clogin", category: "Madhya Pradesh Government" },
+    { label: "MP Bhulekh", url: "https://webgis2.mpbhulekh.gov.in/#/home", category: "Revenue" },
+    { label: "MP Online", url: "https://mponline.gov.in/Portal/Index.aspx", category: "Services" },
+    { label: "Samagra Portal", url: "https://samagra.gov.in/", category: "Madhya Pradesh Government" },
+    { label: "Tribal MP", url: "https://www.tribal.mp.gov.in/mptaas", category: "Madhya Pradesh Government" },
+    { label: "Digital Seva CSC", url: "https://digitalseva.csc.gov.in/", category: "Services" },
+    { label: "MP eDistrict", url: "https://mpedistrict.gov.in/MPL/index.aspx", category: "Madhya Pradesh Government" },
+    { label: "MP Treasury", url: "https://mptreasury.gov.in/MPCTP/portal.htm?actionFlag=getVisitCounter", category: "Madhya Pradesh Government" },
+    { label: "UIDAI Aadhaar", url: "https://myaadhaar.uidai.gov.in/", category: "Central Government" },
+    { label: "IDMS Online", url: "https://www.idmsonline.in/", category: "Other" }
+  );
+}
+---
+
+<Base>
+  <section class="section pt-14">
+    <div class="container text-center mb-12">
+      <h1 class="text-h2 text-primary font-bold">{t(lang, 'nav.directory')}</h1>
+      <p class="text-lg text-text-light mt-4">{t(lang, 'common.directorySubtitle')}</p>
+    </div>
+
+    <div class="container">
+      <div class="grid md:grid-cols-2 gap-4">
+        {websites.map(site => (
+          <a href={site.url} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 bg-white border border-border rounded-xl hover:border-primary transition-colors group">
+            <div>
+              <h3 class="font-bold text-dark group-hover:text-primary transition-colors">{site.label}</h3>
+              <p class="text-sm text-text-light mt-1">{site.category}</p>
+            </div>
+            <div class="text-primary-light group-hover:text-primary">
+              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,90 @@
+---
+import Social from "@/components/Social.astro";
+import config from "@/config/config.json";
+import social from "@/config/social.json";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { SocialType } from "@/types";
+import { t } from "@/utils/translations";
+
+const { main: socialLinks } = social as SocialType;
+const { pathname } = Astro.url;
+const pathParts = pathname.split('/').filter(p => p);
+const currentLang = (pathParts[0] === 'hi' || pathParts[0] === 'en') ? pathParts[0] : 'en';
+
+const quickLinks = [
+  { name: t(currentLang, 'nav.home'), url: `/${currentLang}/home` },
+  { name: t(currentLang, 'nav.forms'), url: `/${currentLang}/forms` },
+  { name: t(currentLang, 'nav.vacancies'), url: `/${currentLang}/vacancies` },
+  { name: t(currentLang, 'nav.services'), url: `/${currentLang}/services` },
+  { name: t(currentLang, 'nav.contact'), url: `/${currentLang}/contact` }
+];
+---
+
+<footer class="relative overflow-hidden bg-primary text-white border-t-4 border-secondary">
+  <div class="container py-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Column 1 - Google Map (Left Bottom) -->
+      <div class="md:col-span-1 rounded-xl overflow-hidden shadow-lg border border-white/20 h-48 md:h-auto">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116346.75929388308!2d81.28292885973307!3d23.298132646698188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39864205c0678c13%3A0xe5a3c942dbdebc6!2sShahdol%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <!-- Column 2 - Logo & Contact -->
+      <div class="md:col-span-1 text-sm text-white">
+        <h2 class="text-2xl font-bold text-white mb-3" style="font-family: 'Arial Black', Impact, sans-serif;">{config.site.logo_text}</h2>
+        <p class="mb-4 leading-snug text-white/90">{config.params.footer_tagline}</p>
+        
+        <div class="flex flex-col gap-2">
+          <div class="flex items-start gap-2">
+             <span class="text-secondary mt-1"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg></span>
+             <span>{config.params.footer_address}</span>
+          </div>
+          <div class="flex items-center gap-2">
+             <span class="text-secondary"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></span>
+             <a class="hover:text-secondary transition-colors" href={`tel:${config.params.footer_phone}`}>{config.params.footer_phone}</a>
+          </div>
+          <div class="flex items-center gap-2">
+             <span class="text-secondary"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></span>
+             <a class="hover:text-secondary transition-colors" href={`mailto:${config.params.footer_email}`}>{config.params.footer_email}</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Column 3 - Primary Links -->
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+        <ul class="flex flex-col gap-2">
+          {
+            quickLinks.map((item) => (
+              <li>
+                <a href={item.url} class="text-sm text-white/90 hover:text-secondary transition-colors">
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottom Area -->
+  <hr class="h-px bg-white/20 border-0" />
+  <div class="container py-4">
+    <div class="flex justify-between lg:items-center flex-col lg:flex-row gap-y-4 w-full">
+      <p
+        class="text-xs text-white/80"
+        set:html={markdownify(config.params.copyright)}
+      />
+      <Social className="social-icons lg:ml-auto scale-90" source={socialLinks} />
+    </div>
+  </div>
+</footer>

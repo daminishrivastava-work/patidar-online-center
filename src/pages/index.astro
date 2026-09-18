@@ -1,0 +1,15 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.location.replace('/en/home');
+    });
+  </script>
+</Base>
