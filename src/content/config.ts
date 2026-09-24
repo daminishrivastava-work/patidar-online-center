@@ -6,6 +6,10 @@ const formsCollection = defineCollection({
     title: z.string(),
     category: z.string(),
     endDate: z.string(),
+    featured: z.boolean().optional(),
+    youtubeGuideUrl: z.string().optional(),
+    status: z.string().optional(),
+    link: z.string().optional(),
   }),
 });
 
@@ -15,6 +19,10 @@ const vacanciesCollection = defineCollection({
     title: z.string(),
     category: z.string(),
     endDate: z.string(),
+    featured: z.boolean().optional(),
+    youtubeGuideUrl: z.string().optional(),
+    status: z.string().optional(),
+    link: z.string().optional(),
   }),
 });
 
@@ -23,6 +31,7 @@ const servicesCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     category: z.string(),
+    youtubeGuideUrl: z.string().optional(),
   }),
 });
 

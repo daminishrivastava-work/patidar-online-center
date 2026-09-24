@@ -1,11 +1,11 @@
 {
   "site": {
     "title": "Patidar Online Center",
-    "base_url": "https://patidaronline.com",
+    "base_url": "https://www.patidaronlinecenter.com",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
-    "logo": "",
+    "logo": "/images/logo.jpg",
     "logo_width": "200",
     "logo_height": "50",
     "logo_text": "Patidar Online Center"
@@ -21,7 +21,16 @@
     "footer_tagline": "Your trusted center for online forms, government services, and digital solutions.",
     "footer_email": "patidaronline4u@gmail.com",
     "footer_phone": "7581977778",
-    "footer_address": "Shop No. 02, Ren Basera Complex, Jaistam Chowk, Shahdol, Madhya Pradesh – 484001"
+    "whatsapp_number": "9425878198",
+    "whatsapp_group_url": "",
+    "branches": [
+      {
+        "name": "Main Branch",
+        "address": "Shop No. 02, Rain Basera Complex, Jaistambh Chowk, Shahdol, Madhya Pradesh – 484001",
+        "phone": "7581977778",
+        "mapsUrl": ""
+      }
+    ]
   },
   "navigation_button": {
     "enable": false,
