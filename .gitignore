@@ -3,6 +3,7 @@ dist/
 .output/
 .json/
 .vercel
+.wrangler/
 
 # dependencies
 node_modules/
