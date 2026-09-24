@@ -5,9 +5,9 @@
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
-    "logo": "/images/logo.jpg",
-    "logo_width": "200",
-    "logo_height": "50",
+    "logo": "/images/patidar_circle_logo.png",
+    "logo_width": "64",
+    "logo_height": "64",
     "logo_text": "Patidar Online Center"
   },
   "settings": {

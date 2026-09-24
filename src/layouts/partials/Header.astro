@@ -26,11 +26,9 @@ const toggleLangText = currentLang === 'en' ? 'हिंदी' : 'English';
 const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
 ---
 
-<header
-  class={`header z-50 w-full transition-all duration-300 ${settings.sticky_header ? "fixed top-0" : ""}`}
->
+<header class={`header z-50 w-full transition-all duration-300 m-0 p-0 border-0 ${settings.sticky_header ? "fixed top-0" : "relative"}`}>
   <!-- Top Red Strip matching storefront - Floating look -->
-  <div class="w-full bg-secondary text-white text-sm py-2 shadow-md relative z-40">
+  <div class="w-full bg-secondary text-white text-sm py-2 shadow-md relative z-40 mt-0">
     <div class="container relative flex justify-center items-center">
       <!-- Language Switcher (Top Left - Blending Highlight) -->
       <a href={toggleLangUrl} class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center bg-black/20 hover:bg-black/30 text-[#FFD700] font-bold transition-colors py-1 px-3 rounded-md text-xs shadow-inner" onclick="localStorage.setItem('lang', '${toggleLang}')">
@@ -44,97 +42,69 @@ const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
   </div>
   
   <div class="bg-primary shadow-lg relative z-30">
-    <nav class="navbar w-full px-4 lg:px-8 xl:px-12 relative flex flex-nowrap items-center justify-between py-2">
-    <!-- logo -->
-    <div class="order-0">
-      <Logo />
-    </div>
-    <!-- navbar toggler -->
-    <input id="nav-toggle" type="checkbox" class="peer hidden" />
-    <label
-      for="nav-toggle"
-      class="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1 bg-white/10 backdrop-blur-lg size-12 rounded-xl justify-center ml-2 border border-white/20"
-    >
-      <svg
-        id="show-button"
-        class="h-6 fill-current block peer-checked:hidden"
-        viewBox="0 0 20 20"
-      >
-        <title>Menu Open</title>
-        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
-      </svg>
-      <svg
-        id="hide-button"
-        class="h-6 fill-current hidden peer-checked:block"
-        viewBox="0 0 20 20"
-      >
-        <title>Menu Close</title>
-        <polygon
-          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
-          transform="rotate(45 10 10)"></polygon>
-      </svg>
-    </label>
-    <!-- /navbar toggler -->
-    <ul
-      id="nav-menu"
-      class="navbar-nav order-3 hidden peer-checked:flex peer-checked:flex-col lg:flex w-full py-6 max-lg:mt-5 lg:order-1 lg:w-auto lg:gap-x-2 lg:py-0 xl:gap-x-4 bg-primary/95 lg:bg-transparent backdrop-blur-lg rounded-2xl px-6 border border-white/10 lg:border-none shadow-lg lg:shadow-none"
-    >
-      {
-        menuItems.map((item) => {
-          // Do not render Contact in the main menu list, we will make it a CTA
-          if (item.key === 'contact') return null;
-          
-          return (
-            <li class="nav-item">
-              <a
-                href={item.url}
-                class={`nav-link block font-semibold text-white/90 hover:text-white hover:bg-white/10 px-4 py-2 rounded-lg transition-colors ${
-                  (pathname === `${item.url}/` || pathname === item.url) &&
-                  "active text-white bg-white/20"
-                }`}
-              >
-                {t(currentLang, `nav.${item.key}`)}
-              </a>
-            </li>
-          );
-        })
-      }
+    <!-- Use grid/flex for perfect Logo (left), Nav (center), Actions (right) alignment -->
+    <nav class="w-full px-4 lg:px-8 xl:px-12 relative flex items-center justify-between py-2 gap-4">
       
-      <!-- Mobile Search -->
-      <li class="nav-item lg:hidden mt-2 border-t border-white/20 pt-4">
-        <div class="relative group">
-          <input type="text" id="mobile-search-input" placeholder="Search..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-lg pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-white/50" />
-          <svg class="w-4 h-4 text-white absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          
-          <div id="mobile-search-results" class="mt-2 w-full bg-white rounded-xl shadow-xl overflow-hidden hidden max-h-60 overflow-y-auto z-50">
-          </div>
-        </div>
-      </li>
-    </ul>
-    
-    <!-- Contact CTA and Search (Top Right) -->
-    <div class="order-1 ml-auto flex flex-nowrap items-center gap-2 xl:gap-4 md:order-2 lg:ml-0 py-2 shrink-0">
-       
-       <!-- Global Search -->
-       <div class="relative group hidden lg:block">
-         <input type="text" id="global-search-input" placeholder="Search..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-full pl-9 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/20 transition-all w-40 xl:w-56" />
-         <svg class="w-4 h-4 text-white absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-         
-         <!-- Search Results Dropdown -->
-         <div id="search-results" class="absolute top-full right-0 mt-3 w-80 bg-white rounded-xl shadow-2xl border border-border overflow-hidden hidden max-h-96 overflow-y-auto z-50">
-           <!-- Results injected via JS -->
-         </div>
-       </div>
+      <!-- Logo (Left) -->
+      <div class="flex-1 flex items-center justify-start min-w-[200px]">
+        <Logo />
+      </div>
 
-       <a 
-         href={`/${currentLang}/contact`} 
-         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full pl-1.5 pr-4 xl:pr-6 py-1 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-wide flex items-center gap-2 animate-pulse text-[10px] xl:text-sm whitespace-nowrap"
-       >
-         <img src="/images/profile.jpg" alt="Owner" class="w-6 h-6 xl:w-8 xl:h-8 rounded-full object-cover border-2 border-white shadow-sm" />
-         {t(currentLang, 'nav.contact')}
-       </a>
-    </div>
-  </nav>
+      <!-- navbar toggler (Mobile) -->
+      <input id="nav-toggle" type="checkbox" class="peer hidden" />
+      <label for="nav-toggle" class="cursor-pointer flex items-center lg:hidden text-white bg-white/10 backdrop-blur-lg size-12 rounded-xl justify-center ml-auto border border-white/20">
+        <svg id="show-button" class="h-6 fill-current block peer-checked:hidden" viewBox="0 0 20 20"><title>Menu Open</title><path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path></svg>
+        <svg id="hide-button" class="h-6 fill-current hidden peer-checked:block" viewBox="0 0 20 20"><title>Menu Close</title><polygon points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2" transform="rotate(45 10 10)"></polygon></svg>
+      </label>
+
+      <!-- Center Menu -->
+      <ul id="nav-menu" class="hidden peer-checked:flex peer-checked:flex-col lg:flex lg:flex-row lg:items-center justify-center lg:flex-none absolute lg:static top-full left-0 w-full lg:w-auto bg-primary/95 lg:bg-transparent backdrop-blur-lg lg:backdrop-blur-none px-6 lg:px-0 py-6 lg:py-0 border-t border-white/10 lg:border-none shadow-xl lg:shadow-none z-50">
+        {
+          menuItems.map((item) => {
+            if (item.key === 'contact') return null;
+            return (
+              <li class="nav-item">
+                <a
+                  href={item.url}
+                  class={`nav-link block font-semibold text-white/90 hover:text-white hover:bg-white/10 px-3 xl:px-4 py-2 rounded-lg transition-colors whitespace-nowrap text-sm xl:text-base ${
+                    (pathname === `${item.url}/` || pathname === item.url) &&
+                    "active text-white bg-white/20"
+                  }`}
+                >
+                  {t(currentLang, `nav.${item.key}`)}
+                </a>
+              </li>
+            );
+          })
+        }
+        
+        <!-- Mobile Search -->
+        <li class="nav-item lg:hidden mt-2 border-t border-white/20 pt-4">
+          <div class="relative group">
+            <input type="text" id="mobile-search-input" placeholder="Search..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-lg pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-white/50" />
+            <svg class="w-4 h-4 text-white absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <div id="mobile-search-results" class="mt-2 w-full bg-white rounded-xl shadow-xl overflow-hidden hidden max-h-60 overflow-y-auto z-50"></div>
+          </div>
+        </li>
+      </ul>
+      
+      <!-- Contact CTA and Search (Right) -->
+      <div class="flex-1 hidden lg:flex items-center justify-end gap-2 xl:gap-4 shrink-0 min-w-[300px]">
+         <!-- Global Search -->
+         <div class="relative group">
+           <input type="text" id="global-search-input" placeholder="Search..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-full pl-9 pr-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/20 transition-all w-48 xl:w-56" />
+           <svg class="w-4 h-4 text-white absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+           
+           <div id="search-results" class="absolute top-full right-0 mt-3 w-80 bg-white rounded-xl shadow-2xl border border-border overflow-hidden hidden max-h-96 overflow-y-auto z-50 text-left"></div>
+         </div>
+
+         <a href={`/${currentLang}/contact`} class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full pl-1.5 pr-4 xl:pr-6 py-1 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-wide flex items-center gap-2 animate-pulse text-[10px] xl:text-sm whitespace-nowrap">
+           <img src="/images/profile.jpg" alt="Owner" class="w-6 h-6 xl:w-8 xl:h-8 rounded-full object-cover border-2 border-white shadow-sm" />
+           {t(currentLang, 'nav.contact')}
+         </a>
+      </div>
+
+    </nav>
   </div>
 </header>
 
