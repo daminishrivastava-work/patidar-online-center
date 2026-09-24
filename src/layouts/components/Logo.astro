@@ -30,13 +30,14 @@ const homeUrl = currentLang ? `/${currentLang}/home` : '/';
       <>
         <ImageMod
           src={src ? src : logo}
-          class={`inline-block `}
+          class="inline-block rounded-full object-cover shadow-sm border-2 border-white/20"
           width={logo_width.replace("px", "") * 2}
           height={logo_height.replace("px", "") * 2}
           alt={title}
           style={{
             height: logo_height.replace("px", "") + "px",
             width: logo_width.replace("px", "") + "px",
+            aspectRatio: "1/1"
           }}
           format="webp"
         />

@@ -44,7 +44,7 @@ const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
   </div>
   
   <div class="bg-primary shadow-lg relative z-30">
-    <nav class="navbar container relative">
+    <nav class="navbar container relative flex items-center justify-between py-2">
     <!-- logo -->
     <div class="order-0">
       <Logo />
@@ -128,8 +128,9 @@ const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
 
        <a 
          href={`/${currentLang}/contact`} 
-         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full px-6 xl:px-8 py-2.5 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-wide md:tracking-widest animate-pulse text-xs xl:text-base"
+         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full pl-2 pr-6 xl:pr-8 py-1.5 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-wide md:tracking-widest flex items-center gap-3 animate-pulse text-xs xl:text-base"
        >
+         <img src="/images/profile.jpg" alt="Owner" class="w-8 h-8 xl:w-10 xl:h-10 rounded-full object-cover border-2 border-white shadow-sm" />
          {t(currentLang, 'nav.contact')}
        </a>
     </div>
