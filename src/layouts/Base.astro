@@ -156,7 +156,7 @@ const currentLang = (pathParts[0] === 'hi' || pathParts[0] === 'en') ? pathParts
     {/* google tag manager noscript */}
     {
       config.google_tag_manager.enable && (
-        <GoogleTagmanagerNoscript id={config.google_tag_manager.gtm_id} />
+        <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${config.google_tag_manager.gtm_id}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       )
     }
 
