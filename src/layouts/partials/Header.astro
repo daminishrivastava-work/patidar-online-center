@@ -99,13 +99,36 @@ const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
           );
         })
       }
+      
+      <!-- Mobile Search -->
+      <li class="nav-item lg:hidden mt-2 border-t border-white/20 pt-4">
+        <div class="relative group">
+          <input type="text" id="mobile-search-input" placeholder="Search..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-lg pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-white/50" />
+          <svg class="w-4 h-4 text-white absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          
+          <div id="mobile-search-results" class="mt-2 w-full bg-white rounded-xl shadow-xl overflow-hidden hidden max-h-60 overflow-y-auto z-50">
+          </div>
+        </div>
+      </li>
     </ul>
     
-    <!-- Contact CTA (Top Right) -->
-    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0 py-2">
+    <!-- Contact CTA and Search (Top Right) -->
+    <div class="order-1 ml-auto flex items-center gap-4 md:order-2 lg:ml-0 py-2">
+       
+       <!-- Global Search -->
+       <div class="relative group hidden lg:block">
+         <input type="text" id="global-search-input" placeholder="Search forms, services..." class="bg-white/10 border border-white/20 text-white placeholder-white/70 text-sm rounded-full pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white/20 transition-all w-56 xl:w-64" />
+         <svg class="w-4 h-4 text-white absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+         
+         <!-- Search Results Dropdown -->
+         <div id="search-results" class="absolute top-full right-0 mt-3 w-80 bg-white rounded-xl shadow-2xl border border-border overflow-hidden hidden max-h-96 overflow-y-auto z-50">
+           <!-- Results injected via JS -->
+         </div>
+       </div>
+
        <a 
          href={`/${currentLang}/contact`} 
-         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full px-8 py-2.5 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-widest animate-pulse"
+         class="btn bg-[#FFD700] text-dark border-2 border-[#FFD700] hover:bg-white hover:text-dark hover:border-white rounded-full px-6 xl:px-8 py-2.5 font-extrabold shadow-[0_0_15px_rgba(255,215,0,0.5)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8)] hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-wide md:tracking-widest animate-pulse text-xs xl:text-base"
        >
          {t(currentLang, 'nav.contact')}
        </a>
@@ -114,3 +137,61 @@ const toggleLangUrl = `/${toggleLang}/${pathParts.slice(1).join('/')}`;
   </div>
 </header>
 
+<script>
+  let searchData = null;
+  const searchInputs = [document.getElementById('global-search-input'), document.getElementById('mobile-search-input')];
+  const searchResultBoxes = [document.getElementById('search-results'), document.getElementById('mobile-search-results')];
+
+  searchInputs.forEach((searchInput, index) => {
+    const searchResults = searchResultBoxes[index];
+    if (searchInput && searchResults) {
+      searchInput.addEventListener('focus', async () => {
+        if (!searchData) {
+          try {
+            const res = await fetch('/api/search.json');
+            searchData = await res.json();
+          } catch (e) {
+            console.error("Failed to load search index", e);
+          }
+        }
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+        
+        if (query.length < 2 || !searchData) {
+          searchResults.classList.add('hidden');
+          return;
+        }
+
+        const results = searchData.filter((item: any) => 
+          item.title.toLowerCase().includes(query) || 
+          item.category.toLowerCase().includes(query)
+        ).slice(0, 8); // top 8 results
+
+        if (results.length > 0) {
+          searchResults.innerHTML = results.map((r: any) => `
+            <a href="${r.url}" class="block p-3 hover:bg-light border-b border-border last:border-0 transition-colors">
+              <div class="font-bold text-dark text-sm">${r.title}</div>
+              <div class="text-xs text-text-light flex items-center gap-2 mt-1">
+                <span class="bg-primary/10 text-primary px-2 py-0.5 rounded uppercase text-[10px] font-bold">${r.type}</span>
+                ${r.category}
+              </div>
+            </a>
+          `).join('');
+          searchResults.classList.remove('hidden');
+        } else {
+          searchResults.innerHTML = `<div class="p-4 text-sm text-text-light text-center">No results found</div>`;
+          searchResults.classList.remove('hidden');
+        }
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target as Node) && !searchResults.contains(e.target as Node)) {
+          searchResults.classList.add('hidden');
+        }
+      });
+    }
+  });
+</script>
