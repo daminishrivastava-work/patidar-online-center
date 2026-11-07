@@ -4,141 +4,176 @@ import { t } from "@/utils/translations";
 
 interface Props {
   lang: "en" | "hi";
+  variant?: "top-bar" | "section";
 }
 
-const { lang } = Astro.props;
+const { lang, variant = "top-bar" } = Astro.props;
+const isSection = variant === "section";
 ---
 
-<div class="current-jobs-bar w-full bg-[#991b1b] text-white border-b-2 border-red-900 shadow-md relative z-30 select-none">
-  <div class="w-full flex items-stretch overflow-hidden">
-    
-    <!-- Fixed Badge on the Left with Pulse Indicator -->
-    <div class="bg-[#7f1d1d] text-yellow-300 font-black px-3.5 sm:px-6 py-2.5 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shrink-0 z-20 shadow-[4px_0_12px_rgba(0,0,0,0.35)] border-r border-red-950">
-      <span class="relative flex h-2.5 w-2.5">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-300"></span>
+{isSection ? (
+  <section class="py-5 bg-gradient-to-r from-[#6b0f0f] via-[#851414] to-[#6b0f0f] text-white relative z-20 shadow-md border-y-2 border-red-950 overflow-hidden select-none">
+    <div class="container mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <span class="relative flex h-3.5 w-3.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-80"></span>
+          <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500 border-2 border-white shadow-sm"></span>
+        </span>
+        <h3 class="text-sm sm:text-base font-black tracking-wide uppercase text-yellow-300 drop-shadow-sm flex items-center gap-1.5">
+          <span>🔴</span>
+          <span>{lang === 'hi' ? 'वर्तमान नौकरियां एवं सक्रिय आवेदन लिंक' : 'Current Jobs & Active Application Links'}</span>
+        </h3>
+      </div>
+      <span class="text-[11px] text-white/80 font-medium hidden sm:inline-flex items-center gap-1 bg-black/20 px-3 py-1 rounded-full">
+        <span>⚡ Hover to Pause</span> • <span>Click to Redirect ↗</span>
       </span>
-      <svg class="w-4 h-4 fill-current hidden sm:inline-block" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
-      <span class="whitespace-nowrap">{t(lang, 'portal.currentJobs')}</span>
     </div>
 
-    <!-- Moving Carousel Track Container -->
-    <div id="current-jobs-track-wrapper" class="flex-1 overflow-hidden relative flex items-center py-2 group cursor-pointer">
-      
-      <!-- Gradient Fades on Edges for smooth visual transition -->
-      <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#991b1b] to-transparent z-10"></div>
-      <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#991b1b] to-transparent z-10"></div>
+    <div class="relative w-full overflow-hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-[#6b0f0f] to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-[#6b0f0f] to-transparent z-10 pointer-events-none"></div>
 
-      <!-- Moving Carousel Track (Paused on Hover) -->
-      <div class="inline-flex gap-6 whitespace-nowrap animate-jobs-marquee group-hover:[animation-play-state:paused] text-xs sm:text-sm items-center">
-        {currentJobs.map((job) => {
-          const title = lang === 'hi' ? job.title_hi : job.title_en;
-          const isOffline = job.isOffline;
-          const href = job.url;
-          const target = job.isExternal ? "_blank" : undefined;
-          const rel = job.isExternal ? "noopener noreferrer" : undefined;
+      <div class="overflow-hidden py-1">
+        <div class="inline-flex gap-4 sm:gap-5 whitespace-nowrap animate-marquee-smooth hover:[animation-play-state:paused] px-4">
+          {currentJobs.map((job) => {
+            const title = lang === 'hi' ? job.title_hi : job.title_en;
+            const isOffline = job.isOffline;
+            return (
+              <a 
+                href={job.url} 
+                target={job.isExternal ? "_blank" : undefined}
+                rel={job.isExternal ? "noopener noreferrer" : undefined}
+                data-form-id={isOffline ? job.formId : undefined}
+                class={`inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl border transition-all duration-300 shadow-sm cursor-pointer ${
+                  isOffline 
+                    ? "open-checkout-trigger bg-amber-400 text-gray-950 border-yellow-200 hover:bg-white hover:text-red-700 font-extrabold shadow-md hover:scale-105" 
+                    : "bg-white/10 hover:bg-white/25 text-white border-white/20 hover:border-yellow-300 font-semibold hover:scale-102"
+                }`}
+                title={isOffline ? "Click to view and purchase physical form" : `Click to visit ${job.title_en}`}
+              >
+                <span class={`text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                  isOffline ? "bg-red-700 text-white" : "bg-black/40 text-yellow-300 border border-yellow-400/30"
+                }`}>
+                  {job.tag}
+                </span>
+                <span class="text-xs sm:text-sm">{title}</span>
+                <span class={`font-black text-sm ${isOffline ? "text-red-800" : "text-yellow-300"}`}>
+                  {isOffline ? "⚡" : "↗"}
+                </span>
+              </a>
+            );
+          })}
 
-          // Tag color styling
-          let tagClass = "bg-white/20 text-white";
-          if (job.tag === "Offline Form") tagClass = "bg-yellow-400 text-dark font-black shadow-xs";
-          else if (job.tag === "MP Govt") tagClass = "bg-emerald-500 text-white";
-          else if (job.tag === "Railway") tagClass = "bg-blue-600 text-white";
-          else if (job.tag === "SSC") tagClass = "bg-indigo-600 text-white";
-          else if (job.tag === "UPSC" || job.tag === "MPPSC") tagClass = "bg-purple-600 text-white";
-
-          return (
-            <a 
-              href={href}
-              target={target}
-              rel={rel}
-              data-is-offline={isOffline ? "true" : "false"}
-              data-form-id={job.formId || ""}
-              class="ticker-job-link inline-flex items-center gap-2 bg-black/20 hover:bg-black/40 border border-white/10 hover:border-yellow-400/60 px-3.5 py-1.5 rounded-full text-white hover:text-yellow-300 transition-all duration-200 group/link shrink-0 shadow-xs"
-            >
-              <span class={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold ${tagClass}`}>
-                {job.tag}
-              </span>
-              <span class="font-medium group-hover/link:underline">{title}</span>
-              <svg class="w-3.5 h-3.5 text-yellow-300 shrink-0 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-              </svg>
-            </a>
-          );
-        })}
-
-        {/* Duplicate list for seamless infinite loop */}
-        {currentJobs.map((job) => {
-          const title = lang === 'hi' ? job.title_hi : job.title_en;
-          const isOffline = job.isOffline;
-          const href = job.url;
-          const target = job.isExternal ? "_blank" : undefined;
-          const rel = job.isExternal ? "noopener noreferrer" : undefined;
-
-          let tagClass = "bg-white/20 text-white";
-          if (job.tag === "Offline Form") tagClass = "bg-yellow-400 text-dark font-black shadow-xs";
-          else if (job.tag === "MP Govt") tagClass = "bg-emerald-500 text-white";
-          else if (job.tag === "Railway") tagClass = "bg-blue-600 text-white";
-          else if (job.tag === "SSC") tagClass = "bg-indigo-600 text-white";
-          else if (job.tag === "UPSC" || job.tag === "MPPSC") tagClass = "bg-purple-600 text-white";
-
-          return (
-            <a 
-              href={href}
-              target={target}
-              rel={rel}
-              data-is-offline={isOffline ? "true" : "false"}
-              data-form-id={job.formId || ""}
-              class="ticker-job-link inline-flex items-center gap-2 bg-black/20 hover:bg-black/40 border border-white/10 hover:border-yellow-400/60 px-3.5 py-1.5 rounded-full text-white hover:text-yellow-300 transition-all duration-200 group/link shrink-0 shadow-xs"
-            >
-              <span class={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold ${tagClass}`}>
-                {job.tag}
-              </span>
-              <span class="font-medium group-hover/link:underline">{title}</span>
-              <svg class="w-3.5 h-3.5 text-yellow-300 shrink-0 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-              </svg>
-            </a>
-          );
-        })}
+          {currentJobs.map((job) => {
+            const title = lang === 'hi' ? job.title_hi : job.title_en;
+            const isOffline = job.isOffline;
+            return (
+              <a 
+                href={job.url} 
+                target={job.isExternal ? "_blank" : undefined}
+                rel={job.isExternal ? "noopener noreferrer" : undefined}
+                data-form-id={isOffline ? job.formId : undefined}
+                class={`inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl border transition-all duration-300 shadow-sm cursor-pointer ${
+                  isOffline 
+                    ? "open-checkout-trigger bg-amber-400 text-gray-950 border-yellow-200 hover:bg-white hover:text-red-700 font-extrabold shadow-md hover:scale-105" 
+                    : "bg-white/10 hover:bg-white/25 text-white border-white/20 hover:border-yellow-300 font-semibold hover:scale-102"
+                }`}
+                title={isOffline ? "Click to view and purchase physical form" : `Click to visit ${job.title_en}`}
+              >
+                <span class={`text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                  isOffline ? "bg-red-700 text-white" : "bg-black/40 text-yellow-300 border border-yellow-400/30"
+                }`}>
+                  {job.tag}
+                </span>
+                <span class="text-xs sm:text-sm">{title}</span>
+                <span class={`font-black text-sm ${isOffline ? "text-red-800" : "text-yellow-300"}`}>
+                  {isOffline ? "⚡" : "↗"}
+                </span>
+              </a>
+            );
+          })}
+        </div>
       </div>
     </div>
+  </section>
+) : (
+  <div class="w-full bg-gradient-to-r from-[#6b0f0f] via-[#851414] to-[#6b0f0f] text-white border-b-2 border-red-950 shadow-sm relative z-30 select-none overflow-hidden">
+    <div class="w-full flex items-center relative">
+      
+      <div class="bg-[#520909] text-yellow-300 font-black px-3 sm:px-5 py-2.5 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shrink-0 z-30 shadow-[5px_0_15px_rgba(0,0,0,0.5)] border-r border-red-950">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-80"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border border-white"></span>
+        </span>
+        <span class="font-black text-white">🔴</span>
+        <span class="drop-shadow-sm">{t(lang, 'portal.currentJobs')}</span>
+      </div>
+
+      <div class="absolute left-[135px] sm:left-[175px] top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#520909] to-transparent z-20 pointer-events-none"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#6b0f0f] to-transparent z-20 pointer-events-none"></div>
+
+      <div class="flex-1 overflow-hidden relative flex items-center py-1 group">
+        <div class="inline-flex gap-4 sm:gap-6 whitespace-nowrap animate-marquee-smooth hover:[animation-play-state:paused] text-xs sm:text-sm pl-4">
+          {currentJobs.map((job) => {
+            const title = lang === 'hi' ? job.title_hi : job.title_en;
+            const isOffline = job.isOffline;
+            return (
+              <a 
+                href={job.url} 
+                target={job.isExternal ? "_blank" : undefined}
+                rel={job.isExternal ? "noopener noreferrer" : undefined}
+                data-form-id={isOffline ? job.formId : undefined}
+                class={`inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-200 cursor-pointer shadow-xs ${
+                  isOffline 
+                    ? "open-checkout-trigger bg-amber-400 text-gray-950 border-yellow-300 hover:bg-white hover:text-red-700 font-extrabold" 
+                    : "bg-white/10 hover:bg-white/25 text-white border-white/20 hover:border-yellow-300 font-semibold"
+                }`}
+                title={isOffline ? "Click to view and purchase physical form" : `Click to visit ${job.title_en}`}
+              >
+                <span class={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                  isOffline ? "bg-red-700 text-white" : "bg-black/40 text-yellow-300"
+                }`}>
+                  {job.tag}
+                </span>
+                <span class="hover:underline">{title}</span>
+                <span class="font-extrabold text-xs ml-0.5">
+                  {isOffline ? "⚡" : "↗"}
+                </span>
+              </a>
+            );
+          })}
+
+          {currentJobs.map((job) => {
+            const title = lang === 'hi' ? job.title_hi : job.title_en;
+            const isOffline = job.isOffline;
+            return (
+              <a 
+                href={job.url} 
+                target={job.isExternal ? "_blank" : undefined}
+                rel={job.isExternal ? "noopener noreferrer" : undefined}
+                data-form-id={isOffline ? job.formId : undefined}
+                class={`inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all duration-200 cursor-pointer shadow-xs ${
+                  isOffline 
+                    ? "open-checkout-trigger bg-amber-400 text-gray-950 border-yellow-300 hover:bg-white hover:text-red-700 font-extrabold" 
+                    : "bg-white/10 hover:bg-white/25 text-white border-white/20 hover:border-yellow-300 font-semibold"
+                }`}
+                title={isOffline ? "Click to view and purchase physical form" : `Click to visit ${job.title_en}`}
+              >
+                <span class={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                  isOffline ? "bg-red-700 text-white" : "bg-black/40 text-yellow-300"
+                }`}>
+                  {job.tag}
+                </span>
+                <span class="hover:underline">{title}</span>
+                <span class="font-extrabold text-xs ml-0.5">
+                  {isOffline ? "⚡" : "↗"}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
-
-<style>
-  @keyframes jobsMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .animate-jobs-marquee {
-    animation: jobsMarquee 38s linear infinite;
-    will-change: transform;
-  }
-</style>
-
-<script>
-  function setupTickerLinks() {
-    const offlineLinks = document.querySelectorAll('.ticker-job-link[data-is-offline="true"]');
-    offlineLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const formId = link.getAttribute('data-form-id');
-        if (formId) {
-          e.preventDefault();
-          const targetSection = document.getElementById('offline-forms');
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-          }
-          // Trigger click on corresponding Buy Now button to open checkout modal
-          setTimeout(() => {
-            const btn = document.querySelector(`.open-checkout-trigger[data-form-id="${formId}"]`);
-            if (btn) (btn as HTMLElement).click();
-          }, 350);
-        }
-      });
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', setupTickerLinks);
-  document.addEventListener('astro:page-load', setupTickerLinks);
-</script>
+)}

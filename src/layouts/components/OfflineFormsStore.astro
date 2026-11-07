@@ -308,10 +308,16 @@ const { lang } = Astro.props;
     let currentForm = null;
 
     openTriggers.forEach(trigger => {
-      trigger.addEventListener('click', () => {
+      trigger.addEventListener('click', (e) => {
         const formId = trigger.getAttribute('data-form-id');
         currentForm = offlineForms.find(f => f.id === formId);
         if (!currentForm) return;
+
+        // Smooth scroll to offline forms section
+        const targetSec = document.getElementById('offline-forms');
+        if (targetSec && trigger.closest('#offline-forms') === null) {
+          targetSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         // Reset step
         checkoutViewStep.classList.remove('hidden');

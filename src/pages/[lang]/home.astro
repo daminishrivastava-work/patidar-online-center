@@ -57,10 +57,13 @@ const currentLang = (lang === 'hi' || lang === 'en') ? lang : 'en';
     </div>
   </section>
 
-  <!-- 2. Streamlined Category & State Navigation Tabs & Online Jobs Grid ("Top Most Online") -->
+  <!-- 2. Smooth Moving Carousel right above Jobs and Exams in Category -->
+  <CurrentJobsTicker lang={currentLang} variant="section" />
+
+  <!-- 3. Streamlined Category & State Navigation Tabs & Online Jobs Grid ("Top Most Online") -->
   <JobCategoryTabs lang={currentLang} />
 
-  <!-- 3. Paid Offline / Manual Job Application Form Store (Core Monetization Feature) -->
+  <!-- 4. Paid Offline / Manual Job Application Form Store (Core Monetization Feature) -->
   <OfflineFormsStore lang={currentLang} />
 
   <!-- Important Forms (Colorful Quick Access Boxes) -->
