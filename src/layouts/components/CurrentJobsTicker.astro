@@ -9,44 +9,94 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<div class="w-full bg-[#b91c1c] text-white border-b-2 border-red-800 shadow-sm relative z-30 select-none">
+<div class="current-jobs-bar w-full bg-[#991b1b] text-white border-b-2 border-red-900 shadow-md relative z-30 select-none">
   <div class="w-full flex items-stretch overflow-hidden">
-    <!-- Fixed Badge on the Left -->
-    <div class="bg-[#8b0000] text-yellow-300 font-extrabold px-3 sm:px-6 py-2.5 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5 shrink-0 z-10 shadow-[4px_0_12px_rgba(0,0,0,0.3)] border-r border-red-950">
-      <span class="inline-block w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping"></span>
+    
+    <!-- Fixed Badge on the Left with Pulse Indicator -->
+    <div class="bg-[#7f1d1d] text-yellow-300 font-black px-3.5 sm:px-6 py-2.5 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shrink-0 z-20 shadow-[4px_0_12px_rgba(0,0,0,0.35)] border-r border-red-950">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-yellow-300"></span>
+      </span>
       <svg class="w-4 h-4 fill-current hidden sm:inline-block" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
-      <span>{t(lang, 'portal.currentJobs')}</span>
+      <span class="whitespace-nowrap">{t(lang, 'portal.currentJobs')}</span>
     </div>
 
-    <!-- Running Marquee Track -->
-    <div class="flex-1 overflow-hidden relative flex items-center py-2.5 group">
-      <div class="inline-flex gap-8 whitespace-nowrap animate-marquee group-hover:[animation-play-state:paused] text-xs sm:text-sm">
+    <!-- Moving Carousel Track Container -->
+    <div id="current-jobs-track-wrapper" class="flex-1 overflow-hidden relative flex items-center py-2 group cursor-pointer">
+      
+      <!-- Gradient Fades on Edges for smooth visual transition -->
+      <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#991b1b] to-transparent z-10"></div>
+      <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#991b1b] to-transparent z-10"></div>
+
+      <!-- Moving Carousel Track (Paused on Hover) -->
+      <div class="inline-flex gap-6 whitespace-nowrap animate-jobs-marquee group-hover:[animation-play-state:paused] text-xs sm:text-sm items-center">
         {currentJobs.map((job) => {
           const title = lang === 'hi' ? job.title_hi : job.title_en;
-          const href = job.isOffline ? `#offline-forms` : `/${lang}/vacancies`;
+          const isOffline = job.isOffline;
+          const href = job.url;
+          const target = job.isExternal ? "_blank" : undefined;
+          const rel = job.isExternal ? "noopener noreferrer" : undefined;
+
+          // Tag color styling
+          let tagClass = "bg-white/20 text-white";
+          if (job.tag === "Offline Form") tagClass = "bg-yellow-400 text-dark font-black shadow-xs";
+          else if (job.tag === "MP Govt") tagClass = "bg-emerald-500 text-white";
+          else if (job.tag === "Railway") tagClass = "bg-blue-600 text-white";
+          else if (job.tag === "SSC") tagClass = "bg-indigo-600 text-white";
+          else if (job.tag === "UPSC" || job.tag === "MPPSC") tagClass = "bg-purple-600 text-white";
+
           return (
             <a 
-              href={href} 
-              class="inline-flex items-center gap-2 text-white hover:text-yellow-300 transition-colors font-medium cursor-pointer"
+              href={href}
+              target={target}
+              rel={rel}
+              data-is-offline={isOffline ? "true" : "false"}
+              data-form-id={job.formId || ""}
+              class="ticker-job-link inline-flex items-center gap-2 bg-black/20 hover:bg-black/40 border border-white/10 hover:border-yellow-400/60 px-3.5 py-1.5 rounded-full text-white hover:text-yellow-300 transition-all duration-200 group/link shrink-0 shadow-xs"
             >
-              <span class="bg-white/20 text-white font-bold text-[10px] px-2 py-0.5 rounded-sm uppercase tracking-wider">{job.tag}</span>
-              <span class="hover:underline">{title}</span>
-              <span class="text-yellow-300 font-bold ml-1">★</span>
+              <span class={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold ${tagClass}`}>
+                {job.tag}
+              </span>
+              <span class="font-medium group-hover/link:underline">{title}</span>
+              <svg class="w-3.5 h-3.5 text-yellow-300 shrink-0 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
             </a>
           );
         })}
-        {/* Duplicate loop for seamless infinite marquee */}
+
+        {/* Duplicate list for seamless infinite loop */}
         {currentJobs.map((job) => {
           const title = lang === 'hi' ? job.title_hi : job.title_en;
-          const href = job.isOffline ? `#offline-forms` : `/${lang}/vacancies`;
+          const isOffline = job.isOffline;
+          const href = job.url;
+          const target = job.isExternal ? "_blank" : undefined;
+          const rel = job.isExternal ? "noopener noreferrer" : undefined;
+
+          let tagClass = "bg-white/20 text-white";
+          if (job.tag === "Offline Form") tagClass = "bg-yellow-400 text-dark font-black shadow-xs";
+          else if (job.tag === "MP Govt") tagClass = "bg-emerald-500 text-white";
+          else if (job.tag === "Railway") tagClass = "bg-blue-600 text-white";
+          else if (job.tag === "SSC") tagClass = "bg-indigo-600 text-white";
+          else if (job.tag === "UPSC" || job.tag === "MPPSC") tagClass = "bg-purple-600 text-white";
+
           return (
             <a 
-              href={href} 
-              class="inline-flex items-center gap-2 text-white hover:text-yellow-300 transition-colors font-medium cursor-pointer"
+              href={href}
+              target={target}
+              rel={rel}
+              data-is-offline={isOffline ? "true" : "false"}
+              data-form-id={job.formId || ""}
+              class="ticker-job-link inline-flex items-center gap-2 bg-black/20 hover:bg-black/40 border border-white/10 hover:border-yellow-400/60 px-3.5 py-1.5 rounded-full text-white hover:text-yellow-300 transition-all duration-200 group/link shrink-0 shadow-xs"
             >
-              <span class="bg-white/20 text-white font-bold text-[10px] px-2 py-0.5 rounded-sm uppercase tracking-wider">{job.tag}</span>
-              <span class="hover:underline">{title}</span>
-              <span class="text-yellow-300 font-bold ml-1">★</span>
+              <span class={`text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider font-extrabold ${tagClass}`}>
+                {job.tag}
+              </span>
+              <span class="font-medium group-hover/link:underline">{title}</span>
+              <svg class="w-3.5 h-3.5 text-yellow-300 shrink-0 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
             </a>
           );
         })}
@@ -54,3 +104,41 @@ const { lang } = Astro.props;
     </div>
   </div>
 </div>
+
+<style>
+  @keyframes jobsMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-jobs-marquee {
+    animation: jobsMarquee 38s linear infinite;
+    will-change: transform;
+  }
+</style>
+
+<script>
+  function setupTickerLinks() {
+    const offlineLinks = document.querySelectorAll('.ticker-job-link[data-is-offline="true"]');
+    offlineLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const formId = link.getAttribute('data-form-id');
+        if (formId) {
+          e.preventDefault();
+          const targetSection = document.getElementById('offline-forms');
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+          // Trigger click on corresponding Buy Now button to open checkout modal
+          setTimeout(() => {
+            const btn = document.querySelector(`.open-checkout-trigger[data-form-id="${formId}"]`);
+            if (btn) (btn as HTMLElement).click();
+          }, 350);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupTickerLinks);
+  document.addEventListener('astro:page-load', setupTickerLinks);
+</script>
