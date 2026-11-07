@@ -1,0 +1,61 @@
+[
+  {
+    "id": "cbi-gwalior",
+    "title_en": "Central Bank of India Gwalior — Office Assistant, Attender & Watchman (Offline Form Available)",
+    "title_hi": "सेंट्रल बैंक ऑफ इंडिया ग्वालियर — ऑफिस असिस्टेंट, अटेंडेंट और चौकीदार भर्ती (ऑफलाइन फॉर्म उपलब्ध)",
+    "tag": "Offline Form",
+    "isOffline": true,
+    "formId": "cbi-gwalior-2026",
+    "url": "#offline-forms"
+  },
+  {
+    "id": "mpesb-constable",
+    "title_en": "MPESB MP Police Constable Recruitment 2026 (7,500+ Posts)",
+    "title_hi": "MPESB एमपी पुलिस आरक्षक (कांस्टेबल) भर्ती 2026 (7,500+ पद)",
+    "tag": "MP Govt",
+    "isOffline": false,
+    "url": "/en/vacancies"
+  },
+  {
+    "id": "iaf-gwalior",
+    "title_en": "Indian Air Force Station Gwalior — Civilian MTS & Mess Staff (Postal Application)",
+    "title_hi": "भारतीय वायु सेना स्टेशन ग्वालियर — सिविलियन एमटीएस और मेस स्टाफ (डाक फॉर्म)",
+    "tag": "Offline Form",
+    "isOffline": true,
+    "formId": "iaf-gwalior-mts-2026",
+    "url": "#offline-forms"
+  },
+  {
+    "id": "rrb-group-d",
+    "title_en": "Railway RRB Group D & NTPC Recruitment 2026 Updates",
+    "title_hi": "रेलवे आरआरबी ग्रुप डी एवं एनटीपीसी भर्ती 2026 अपडेट",
+    "tag": "Railway",
+    "isOffline": false,
+    "url": "/en/vacancies"
+  },
+  {
+    "id": "court-shahdol",
+    "title_en": "District Court Shahdol — Peon, Driver & Process Server (Physical Form)",
+    "title_hi": "जिला न्यायालय शहडोल — भृत्य, चालक और प्रोसेस सर्वर (ऑफलाइन फॉर्म)",
+    "tag": "Offline Form",
+    "isOffline": true,
+    "formId": "court-shahdol-2026",
+    "url": "#offline-forms"
+  },
+  {
+    "id": "upsc-ese-2026",
+    "title_en": "UPSC Engineering Services (ESE) Exam 2026 Online Application",
+    "title_hi": "यूपीएससी इंजीनियरिंग सेवा (ESE) परीक्षा 2026 ऑनलाइन आवेदन",
+    "tag": "UPSC",
+    "isOffline": false,
+    "url": "/en/vacancies"
+  },
+  {
+    "id": "mppsc-state-service",
+    "title_en": "MPPSC State Service & State Forest Examination 2026 Notification",
+    "title_hi": "एमपीपीएससी राज्य सेवा एवं वन सेवा परीक्षा 2026 अधिसूचना",
+    "tag": "MPPSC",
+    "isOffline": false,
+    "url": "/en/vacancies"
+  }
+]

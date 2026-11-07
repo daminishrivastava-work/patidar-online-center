@@ -1,0 +1,391 @@
+---
+import offlineForms from "@/config/offline_forms.json";
+import { t } from "@/utils/translations";
+import config from "@/config/config.json";
+
+interface Props {
+  lang: "en" | "hi";
+}
+
+const { lang } = Astro.props;
+---
+
+<section id="offline-forms" class="py-16 bg-white relative overflow-hidden border-b border-border">
+  <!-- Subtle decorative background accent -->
+  <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-secondary/5 blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+
+  <div class="container relative z-10">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-2 shadow-xs">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        {t(lang, 'portal.offlineStoreTitle')}
+      </div>
+      <h2 class="text-3xl md:text-4xl font-black text-primary tracking-tight">
+        {lang === 'hi' ? 'ऑफलाइन / डाक द्वारा आवेदन फॉर्म स्टोर' : 'Printable Offline Application Forms Store'}
+      </h2>
+      <p class="text-text-light text-sm md:text-base max-w-2xl mx-auto mt-2 leading-relaxed">
+        {t(lang, 'portal.offlineStoreSubtitle')}
+      </p>
+    </div>
+
+    <!-- Forms Listing Cards Grid -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {offlineForms.map((form) => {
+        const org = lang === 'hi' ? form.organization_hi : form.organization;
+        const post = lang === 'hi' ? form.postName_hi : form.postName;
+        const qual = lang === 'hi' ? form.qualification_hi : form.qualification;
+        const loc = lang === 'hi' ? form.location_hi : form.location;
+        const desc = lang === 'hi' ? form.description_hi : form.description;
+        
+        return (
+          <div class="bg-white rounded-2xl border-2 border-border/80 hover:border-secondary shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1.5 relative">
+            <!-- Price Floating Tag -->
+            <div class="absolute top-3 right-3 z-10 bg-secondary text-white font-black text-sm px-3 py-1 rounded-full shadow-lg border border-white flex items-center gap-1">
+              <span>₹{form.price}</span>
+              <span class="text-[10px] line-through opacity-70">₹{form.originalPrice}</span>
+            </div>
+
+            <!-- Top Notice Clipping Thumbnail Container -->
+            <div class="relative h-48 w-full bg-[#f4ede1] border-b border-border overflow-hidden cursor-pointer open-checkout-trigger" data-form-id={form.id}>
+              <img 
+                src={form.thumbnail} 
+                alt={post} 
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                <span class="text-white text-xs font-bold flex items-center gap-1 drop-shadow-md">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                  {t(lang, 'portal.viewClipping')}
+                </span>
+              </div>
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="p-4 flex-1 flex flex-col justify-between">
+              <div>
+                <!-- Organization -->
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-secondary block mb-1">
+                  {org}
+                </span>
+
+                <!-- Post Name -->
+                <h3 class="font-bold text-base text-dark group-hover:text-primary transition-colors leading-snug mb-3">
+                  {post}
+                </h3>
+
+                <!-- Specs List -->
+                <div class="space-y-1.5 text-xs text-text-dark mb-4 bg-light/70 p-2.5 rounded-xl border border-border/50">
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-text-light shrink-0">🎓 {t(lang, 'portal.qualificationReq')}:</span>
+                    <span class="font-semibold">{qual}</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-text-light shrink-0">📍 {t(lang, 'portal.location')}:</span>
+                    <span class="font-semibold">{loc}</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-text-light shrink-0">⏳ {t(lang, 'portal.lastDatePost')}:</span>
+                    <span class="font-bold text-red-600">{form.lastDate}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="pt-3 border-t border-border flex items-center gap-2">
+                <button
+                  type="button"
+                  data-form-id={form.id}
+                  class="open-checkout-trigger flex-1 btn bg-secondary text-white hover:bg-secondary-dark font-extrabold py-2.5 px-4 rounded-xl text-xs sm:text-sm uppercase tracking-wide flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+                >
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+                  {t(lang, 'portal.buyNow')} (₹{form.price})
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Interactive Detail & Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm overflow-y-auto p-4 sm:p-6 md:p-10 flex items-center justify-center">
+    <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border border-white/20 overflow-hidden relative my-auto animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="bg-primary text-white p-4 sm:p-6 flex items-center justify-between border-b border-primary-light/20 relative">
+        <div class="pr-8">
+          <span class="bg-secondary text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
+            {t(lang, 'portal.verifiedForm')}
+          </span>
+          <h3 id="modal-post-title" class="text-lg sm:text-2xl font-bold leading-tight">
+            Offline Application Form Details
+          </h3>
+          <p id="modal-org-title" class="text-xs sm:text-sm text-white/80 mt-1">
+            Organization Name
+          </p>
+        </div>
+
+        <!-- Close Button -->
+        <button id="close-modal-btn" type="button" class="absolute top-4 right-4 text-white/80 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 sm:p-8 max-h-[75vh] overflow-y-auto space-y-6">
+        
+        <!-- Step 1: Form Preview & Details -->
+        <div id="checkout-view-step">
+          <div class="grid md:grid-cols-12 gap-6">
+            <!-- Left Column: Newspaper Clipping Preview -->
+            <div class="md:col-span-5 flex flex-col">
+              <span class="text-xs font-bold text-text-light uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                <svg class="w-4 h-4 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                {t(lang, 'portal.viewClipping')}
+              </span>
+              <div class="rounded-2xl border-2 border-border overflow-hidden bg-[#faf8f4] shadow-inner p-2 h-64 md:h-80 flex items-center justify-center">
+                <img id="modal-clipping-img" src="" alt="Notice Clipping" class="max-h-full max-w-full object-contain rounded-lg shadow-sm" />
+              </div>
+
+              <!-- File Metadata Pills -->
+              <div class="mt-3 p-3 bg-light rounded-xl border border-border text-xs space-y-1">
+                <div class="font-bold text-dark text-xs mb-1">📄 {t(lang, 'portal.fileDetails')}:</div>
+                <div class="flex justify-between text-text-dark"><span>{t(lang, 'portal.pagesCount')}:</span> <span id="modal-file-pages" class="font-bold">4 Pages</span></div>
+                <div class="flex justify-between text-text-dark"><span>{t(lang, 'portal.fileSize')}:</span> <span id="modal-file-size" class="font-bold">1.18 MB</span></div>
+                <div class="flex justify-between text-text-dark"><span>{t(lang, 'portal.formatA4')}:</span> <span class="font-bold text-green-700">✓ Ready</span></div>
+              </div>
+            </div>
+
+            <!-- Right Column: Description, Instructions & Purchase Form -->
+            <div class="md:col-span-7 flex flex-col justify-between space-y-4">
+              <div>
+                <h4 class="font-bold text-dark text-sm sm:text-base mb-1.5">{t(lang, 'common.details')}:</h4>
+                <p id="modal-description" class="text-xs sm:text-sm text-text-light leading-relaxed mb-4">
+                  Job description and details.
+                </p>
+
+                <!-- Eligibility Bullets -->
+                <div class="bg-primary/5 p-3.5 rounded-xl border border-primary/20 mb-4">
+                  <h5 class="font-bold text-primary text-xs uppercase tracking-wider mb-2">📌 Eligibility &amp; Key Requirements:</h5>
+                  <ul id="modal-eligibility-list" class="text-xs text-text-dark space-y-1 list-disc list-inside"></ul>
+                </div>
+
+                <!-- Postal Submission Box -->
+                <div class="bg-amber-50 p-3.5 rounded-xl border border-amber-200 mb-4 text-xs">
+                  <span class="font-bold text-amber-900 block mb-1">📮 {t(lang, 'portal.postalSubmission')}:</span>
+                  <p id="modal-postal-instructions" class="text-amber-800 leading-snug">Address instructions here.</p>
+                </div>
+              </div>
+
+              <!-- Customer Checkout Form -->
+              <form id="checkout-form" class="bg-white p-4 rounded-2xl border-2 border-secondary/30 shadow-md">
+                <div class="flex items-center justify-between mb-3 border-b border-border pb-2">
+                  <span class="font-bold text-dark text-sm">{t(lang, 'portal.customerInfo')}</span>
+                  <div class="text-right">
+                    <span class="text-xs text-text-light block">{t(lang, 'portal.price')}:</span>
+                    <span id="modal-price-display" class="text-xl font-black text-secondary">₹20</span>
+                  </div>
+                </div>
+
+                <div class="space-y-3">
+                  <div>
+                    <label class="block text-xs font-semibold text-text-dark mb-1">{t(lang, 'portal.yourName')} *</label>
+                    <input type="text" id="cust-name" required placeholder="e.g. Ramesh Kumar" class="w-full text-xs sm:text-sm px-3 py-2 rounded-lg border border-border focus:ring-2 focus:ring-primary focus:outline-none" />
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-xs font-semibold text-text-dark mb-1">{t(lang, 'portal.yourPhone')} *</label>
+                      <input type="tel" id="cust-phone" required pattern="[0-9]{10}" placeholder="10-digit Mobile" class="w-full text-xs sm:text-sm px-3 py-2 rounded-lg border border-border focus:ring-2 focus:ring-primary focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-semibold text-text-dark mb-1">{t(lang, 'portal.yourEmail')}</label>
+                      <input type="email" id="cust-email" placeholder="name@gmail.com" class="w-full text-xs sm:text-sm px-3 py-2 rounded-lg border border-border focus:ring-2 focus:ring-primary focus:outline-none" />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    id="submit-payment-btn"
+                    class="w-full btn bg-secondary hover:bg-secondary-dark text-white font-black py-3 px-4 rounded-xl text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all"
+                  >
+                    <span>🔒 {t(lang, 'portal.payAndDownload')}</span>
+                    <span id="btn-price-tag" class="bg-white/20 px-2 py-0.5 rounded text-xs">₹20</span>
+                  </button>
+
+                  <p class="text-[11px] text-center text-text-light flex items-center justify-center gap-1">
+                    <svg class="w-3.5 h-3.5 text-green-600 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    {t(lang, 'portal.instantDeliveryNotice')}
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Payment Simulator & Instant Download Unlocked View -->
+        <div id="checkout-success-step" class="hidden text-center py-6 space-y-6">
+          <div class="size-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto shadow-inner border-2 border-green-300 animate-bounce">
+            <svg class="size-10 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          </div>
+
+          <div class="max-w-md mx-auto">
+            <span class="inline-block bg-green-100 text-green-800 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+              Payment Confirmed
+            </span>
+            <h3 class="text-2xl font-black text-dark mb-2">
+              {t(lang, 'portal.paymentSuccessful')}
+            </h3>
+            <p class="text-xs text-text-light mb-4">
+              Transaction ID: <span id="txn-id-display" class="font-mono font-bold text-primary">POC-TXN-894210</span>
+            </p>
+          </div>
+
+          <!-- The Instant Download Button -->
+          <div class="p-6 bg-light rounded-3xl border border-border max-w-lg mx-auto shadow-sm">
+            <a 
+              id="download-pdf-btn" 
+              href="/downloads/offline-forms/sample_offline_form.pdf" 
+              download="Patidar_Online_Center_Application_Form.pdf"
+              class="btn btn-primary w-full py-4 px-6 rounded-2xl text-base font-black flex items-center justify-center gap-3 shadow-xl hover:scale-105 transition-all"
+            >
+              <svg class="size-6 fill-current animate-pulse" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              {t(lang, 'portal.downloadPdfNow')}
+            </a>
+
+            <div class="mt-4 pt-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-text-light">
+              <span>🖨️ A4 Size Print-Ready Format</span>
+              <a 
+                id="whatsapp-backup-link"
+                href={`https://wa.me/91${config.params.whatsapp_number.replace(/\\D/g, '')}?text=Hello%20Patidar%20Online%20Center,%20I%20have%20purchased%20the%20offline%20form%20online.`}
+                target="_blank"
+                rel="noopener noreferrer" 
+                class="text-green-700 font-bold hover:underline flex items-center gap-1"
+              >
+                <span>WhatsApp PDF Copy</span>
+              </a>
+            </div>
+          </div>
+
+          <p class="text-xs text-text-light max-w-md mx-auto">
+            {t(lang, 'portal.thankYouNotice')}
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Client Side Modal & Checkout Logic -->
+<script define:vars={{ offlineForms, lang }}>
+  function setupOfflineStore() {
+    const modal = document.getElementById('checkout-modal');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const openTriggers = document.querySelectorAll('.open-checkout-trigger');
+    const checkoutViewStep = document.getElementById('checkout-view-step');
+    const checkoutSuccessStep = document.getElementById('checkout-success-step');
+    const checkoutForm = document.getElementById('checkout-form');
+
+    // Modal Dynamic Elements
+    const modalPostTitle = document.getElementById('modal-post-title');
+    const modalOrgTitle = document.getElementById('modal-org-title');
+    const modalClippingImg = document.getElementById('modal-clipping-img');
+    const modalFilePages = document.getElementById('modal-file-pages');
+    const modalFileSize = document.getElementById('modal-file-size');
+    const modalDescription = document.getElementById('modal-description');
+    const modalEligibilityList = document.getElementById('modal-eligibility-list');
+    const modalPostalInstructions = document.getElementById('modal-postal-instructions');
+    const modalPriceDisplay = document.getElementById('modal-price-display');
+    const btnPriceTag = document.getElementById('btn-price-tag');
+    const downloadPdfBtn = document.getElementById('download-pdf-btn');
+    const txnIdDisplay = document.getElementById('txn-id-display');
+    const whatsappBackupLink = document.getElementById('whatsapp-backup-link');
+
+    let currentForm = null;
+
+    openTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const formId = trigger.getAttribute('data-form-id');
+        currentForm = offlineForms.find(f => f.id === formId);
+        if (!currentForm) return;
+
+        // Reset step
+        checkoutViewStep.classList.remove('hidden');
+        checkoutSuccessStep.classList.add('hidden');
+
+        // Populate fields based on current language
+        const isHi = lang === 'hi';
+        modalPostTitle.textContent = isHi ? currentForm.postName_hi : currentForm.postName;
+        modalOrgTitle.textContent = isHi ? currentForm.organization_hi : currentForm.organization;
+        modalClippingImg.src = currentForm.thumbnail;
+        modalFilePages.textContent = currentForm.filePages;
+        modalFileSize.textContent = currentForm.fileSize;
+        modalDescription.textContent = isHi ? currentForm.description_hi : currentForm.description;
+        modalPostalInstructions.textContent = currentForm.postalInstructions;
+        modalPriceDisplay.textContent = '₹' + currentForm.price;
+        btnPriceTag.textContent = '₹' + currentForm.price;
+        downloadPdfBtn.href = currentForm.downloadUrl;
+        downloadPdfBtn.setAttribute('download', (currentForm.slug || 'offline_form') + '.pdf');
+
+        // Populate eligibility bullets
+        modalEligibilityList.innerHTML = '';
+        currentForm.eligibility.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          modalEligibilityList.appendChild(li);
+        });
+
+        // Show Modal
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      });
+    });
+
+    // Close Modal
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Form Submission / Payment Simulation
+    if (checkoutForm) {
+      checkoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = (document.getElementById('cust-name')).value;
+        const phone = (document.getElementById('cust-phone')).value;
+        const email = (document.getElementById('cust-email')).value;
+
+        // Generate Transaction ID
+        const randomTxn = 'POC-TXN-' + Math.floor(100000 + Math.random() * 900000);
+        txnIdDisplay.textContent = randomTxn;
+
+        // Update WhatsApp backup link with customer & form details
+        if (whatsappBackupLink && currentForm) {
+          const waMsg = encodeURIComponent(`Hello Patidar Online Center, I have completed payment for: ${currentForm.postName} (Txn: ${randomTxn}, Name: ${name}, Phone: ${phone}). Please send my PDF copy.`);
+          whatsappBackupLink.href = `https://wa.me/918349277080?text=${waMsg}`;
+        }
+
+        // Switch to success & instant download view
+        checkoutViewStep.classList.add('hidden');
+        checkoutSuccessStep.classList.remove('hidden');
+
+        // Automatically trigger PDF download after 1 second
+        setTimeout(() => {
+          downloadPdfBtn.click();
+        }, 800);
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', setupOfflineStore);
+  document.addEventListener('astro:page-load', setupOfflineStore);
+</script>

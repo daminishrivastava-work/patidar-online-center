@@ -1,0 +1,202 @@
+---
+import categoryJobs from "@/config/category_jobs.json";
+import { t } from "@/utils/translations";
+import config from "@/config/config.json";
+
+interface Props {
+  lang: "en" | "hi";
+}
+
+const { lang } = Astro.props;
+
+const categories = [
+  { id: "all", key: "allCategories", label_en: "All Categories", label_hi: "सभी श्रेणियां" },
+  { id: "mp-govt", key: "mpGovt", label_en: "MP Govt Jobs", label_hi: "MP Govt Jobs" },
+  { id: "central", key: "central", label_en: "Central Jobs", label_hi: "Central Jobs" },
+  { id: "bank", key: "bank", label_en: "Bank Jobs", label_hi: "Bank Jobs" },
+  { id: "ssc", key: "ssc", label_en: "SSC Jobs", label_hi: "SSC Jobs" },
+  { id: "railway", key: "railway", label_en: "Railway Jobs", label_hi: "Railway Jobs" },
+  { id: "walkin", key: "walkin", label_en: "Walk-in Interviews", label_hi: "Walk-in Interviews" },
+  { id: "defence", key: "defence", label_en: "Defence Jobs", label_hi: "Defence Jobs" },
+  { id: "psc", key: "psc", label_en: "PSC / MPPSC", label_hi: "PSC / MPPSC" },
+  { id: "upsc", key: "upsc", label_en: "UPSC", label_hi: "UPSC" }
+];
+---
+
+<section id="job-portal-section" class="py-12 bg-light/70 border-b border-border">
+  <div class="container">
+    <!-- Section Title -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider mb-2">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+        {t(lang, 'portal.categoriesTitle')}
+      </div>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-dark tracking-tight">
+        {t(lang, 'portal.topOnlineTitle')}
+      </h2>
+      <p class="text-text-light text-sm md:text-base max-w-2xl mx-auto mt-2">
+        {t(lang, 'portal.categoriesSubtitle')}
+      </p>
+    </div>
+
+    <!-- Category Tabs Navigation (Desktop Scrollable / Wrap) -->
+    <div class="mb-8">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary/20 justify-start lg:justify-center">
+        {categories.map((cat, idx) => {
+          const label = lang === 'hi' ? cat.label_hi : cat.label_en;
+          const isActive = idx === 0;
+          return (
+            <button
+              type="button"
+              data-cat-btn={cat.id}
+              class={`job-tab-btn px-4 py-2 rounded-xl font-bold text-xs md:text-sm whitespace-nowrap transition-all duration-200 border ${
+                isActive 
+                  ? "bg-primary text-white border-primary shadow-md scale-105" 
+                  : "bg-white text-dark hover:bg-primary/10 border-border hover:border-primary/40"
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Jobs Grid Container -->
+    <div id="jobs-grid-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {categoryJobs.map((job) => {
+        const title = lang === 'hi' ? job.title_hi : job.title_en;
+        const catLabel = lang === 'hi' ? job.categoryLabel_hi : job.categoryLabel_en;
+        return (
+          <div 
+            class="job-card bg-white rounded-2xl p-5 border border-border shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between relative overflow-hidden group"
+            data-category={job.category}
+          >
+            <!-- Top Color Accent -->
+            <div class={`absolute top-0 left-0 w-full h-1.5 ${job.isAdmitCard ? 'bg-secondary' : 'bg-primary'}`}></div>
+            
+            <div>
+              <!-- Header Badges -->
+              <div class="flex items-center justify-between gap-2 mb-3 mt-1">
+                <span class="inline-block bg-primary/10 text-primary font-bold text-[11px] px-2.5 py-0.5 rounded-full">
+                  {catLabel}
+                </span>
+                <span class={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                  job.isAdmitCard 
+                    ? 'bg-amber-100 text-amber-800 border border-amber-300' 
+                    : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                }`}>
+                  {job.status}
+                </span>
+              </div>
+
+              <!-- Job Title -->
+              <h3 class="font-bold text-base text-dark mb-2 group-hover:text-primary transition-colors leading-snug">
+                {title}
+              </h3>
+
+              <!-- Department -->
+              <p class="text-xs text-text-light mb-3 flex items-center gap-1.5 font-medium">
+                <svg class="w-3.5 h-3.5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                {job.department}
+              </p>
+
+              <!-- Job Quick Specs Grid -->
+              <div class="grid grid-cols-2 gap-2 p-2.5 bg-light/80 rounded-xl mb-4 text-[11px]">
+                <div>
+                  <span class="text-text-light block">{t(lang, 'portal.eligibility')}:</span>
+                  <span class="font-bold text-dark">{job.qualification}</span>
+                </div>
+                <div>
+                  <span class="text-text-light block">{t(lang, 'portal.totalPosts')}:</span>
+                  <span class="font-bold text-dark">{job.totalPosts}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer & Actions -->
+            <div class="pt-3 border-t border-border flex items-center justify-between gap-2">
+              <div class="text-[11px]">
+                <span class="text-text-light block">{t(lang, 'common.lastDate')}:</span>
+                <span class="font-bold text-red-600">{job.lastDate}</span>
+              </div>
+              
+              <div class="flex items-center gap-2">
+                <a 
+                  href={`https://wa.me/91${config.params.whatsapp_number.replace(/\\D/g, '')}?text=Hello,%20I%20need%20assistance%20for%20${encodeURIComponent(title)}`}
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="p-2 rounded-lg bg-green-50 text-green-700 hover:bg-green-600 hover:text-white transition-colors"
+                  title="WhatsApp Inquiry"
+                >
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 0C5.394 0 0 5.394 0 12.031c0 2.126.551 4.195 1.594 6.015L.178 23.518l5.625-1.478A11.94 11.94 0 0012.031 24c6.634 0 12.031-5.396 12.031-12.031S18.667 0 12.031 0zm3.875 17.062c-.172.486-.984.939-1.391 1.016-.406.078-1.25.172-3.484-.75-2.687-1.109-4.391-3.844-4.516-4.016-.141-.172-1.078-1.437-1.078-2.734 0-1.297.672-1.937.906-2.187.234-.234.516-.297.688-.297.172 0 .344 0 .484.016.156.016.359-.063.562.438.219.531.75 1.828.812 1.953.063.125.109.281.016.469-.094.188-.141.313-.281.484-.141.172-.297.391-.422.516-.141.141-.297.297-.125.609.172.312.766 1.281 1.641 2.062.969.875 1.922 1.156 2.234 1.312.312.156.484.141.672-.078.188-.219.812-.953 1.031-1.281.219-.328.438-.266.719-.156.281.109 1.781.844 2.094 1.016.312.172.516.266.594.406.063.125.063.75-.109 1.234z"/></svg>
+                </a>
+                
+                <a 
+                  href={job.applyUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="btn btn-primary btn-sm py-1.5 px-3 text-xs rounded-lg font-bold flex items-center gap-1 shadow-sm"
+                >
+                  {t(lang, 'portal.applyOnline')}
+                  <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Empty Filter Notice (Hidden by default) -->
+    <div id="no-jobs-notice" class="hidden text-center py-12 bg-white rounded-2xl border border-border mt-4">
+      <p class="text-text-light font-medium">No open positions found in this category right now.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupJobTabs() {
+    const tabButtons = document.querySelectorAll('.job-tab-btn');
+    const jobCards = document.querySelectorAll('.job-card');
+    const noJobsNotice = document.getElementById('no-jobs-notice');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-cat-btn');
+
+        // Update active button state
+        tabButtons.forEach(b => {
+          b.classList.remove('bg-primary', 'text-white', 'border-primary', 'shadow-md', 'scale-105');
+          b.classList.add('bg-white', 'text-dark', 'border-border');
+        });
+        btn.classList.add('bg-primary', 'text-white', 'border-primary', 'shadow-md', 'scale-105');
+        btn.classList.remove('bg-white', 'text-dark', 'border-border');
+
+        // Filter cards
+        let visibleCount = 0;
+        jobCards.forEach(card => {
+          const cardCat = card.getAttribute('data-category');
+          if (cat === 'all' || cardCat === cat) {
+            (card as HTMLElement).style.display = 'flex';
+            visibleCount++;
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+
+        if (noJobsNotice) {
+          if (visibleCount === 0) {
+            noJobsNotice.classList.remove('hidden');
+          } else {
+            noJobsNotice.classList.add('hidden');
+          }
+        }
+      });
+    });
+  }
+
+  // Setup on initial load & view transitions
+  document.addEventListener('DOMContentLoaded', setupJobTabs);
+  document.addEventListener('astro:page-load', setupJobTabs);
+</script>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="100%" height="100%">
+  <rect width="600" height="750" fill="#faf9f5" stroke="#d4cbba" stroke-width="3" />
+  <rect x="15" y="15" width="570" height="720" fill="none" stroke="#2b4c2b" stroke-width="2" />
+  <rect x="19" y="19" width="562" height="712" fill="none" stroke="#2b4c2b" stroke-width="0.8" />
+
+  <rect x="20" y="20" width="560" height="35" fill="#edf4ed" />
+  <text x="30" y="42" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#2b4c2b" letter-spacing="1">MINISTRY OF DEFENCE / GOVT OF INDIA</text>
+  <text x="460" y="42" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#666">HQ CENTRAL COMMAND</text>
+  <line x1="20" y1="55" x2="580" y2="55" stroke="#2b4c2b" stroke-width="1.5" />
+
+  <text x="300" y="90" font-family="'Times New Roman', serif" font-size="20" font-weight="900" fill="#2b4c2b" text-anchor="middle">MILITARY HOSPITAL JABALPUR (M.P.)</text>
+  <text x="300" y="112" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">CIVILIAN GROUP 'C' RECRUITMENT NOTICE 2026</text>
+  <text x="300" y="130" font-family="'Times New Roman', serif" font-size="11" fill="#555" text-anchor="middle">Jabalpur Cantonment Board, Madhya Pradesh - 482001</text>
+  <line x1="35" y1="140" x2="565" y2="140" stroke="#2b4c2b" stroke-width="2" />
+
+  <rect x="35" y="148" width="530" height="32" fill="#2b4c2b" />
+  <text x="300" y="170" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">OFFLINE APPLICATION FOR WARD SAHAYIKA &amp; SAFAIWALA</text>
+
+  <text x="40" y="202" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    Applications are invited in the prescribed format from eligible Indian citizens (Male / Female)
+  </text>
+  <text x="40" y="218" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    for appointment to the following Group 'C' civilian defense vacancies:
+  </text>
+
+  <!-- Vacancy Table -->
+  <rect x="35" y="235" width="530" height="150" fill="#fff" stroke="#333" stroke-width="1" />
+  <rect x="35" y="235" width="530" height="30" fill="#eaf2ea" />
+  <line x1="35" y1="265" x2="565" y2="265" stroke="#333" stroke-width="1.5" />
+  <line x1="85" y1="235" x2="85" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="280" y1="235" x2="280" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="410" y1="235" x2="410" y2="385" stroke="#333" stroke-width="1" />
+
+  <text x="60" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">S.No.</text>
+  <text x="180" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Post Designation</text>
+  <text x="345" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Minimum Qualification</text>
+  <text x="487" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Age &amp; Scale</text>
+
+  <text x="60" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">01.</text>
+  <text x="95" y="290" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">Ward Sahayika (Female)</text>
+  <text x="290" y="290" font-family="'Times New Roman', serif" font-size="10.5">10th Matriculation Pass</text>
+  <text x="487" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18-25 Yrs | L-1</text>
+  <line x1="35" y1="305" x2="565" y2="305" stroke="#ddd" stroke-width="1" />
+
+  <text x="60" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">02.</text>
+  <text x="95" y="330" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">Safaiwali / Safaiwala</text>
+  <text x="290" y="330" font-family="'Times New Roman', serif" font-size="10.5">10th Pass with trade duties</text>
+  <text x="487" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18-25 Yrs | L-1</text>
+  <line x1="35" y1="345" x2="565" y2="345" stroke="#ddd" stroke-width="1" />
+
+  <text x="60" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">03.</text>
+  <text x="95" y="370" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">Washerman (Dhobi)</text>
+  <text x="290" y="370" font-family="'Times New Roman', serif" font-size="10.5">10th Pass + washing trade knowledge</text>
+  <text x="487" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18-25 Yrs | L-1</text>
+
+  <!-- Instructions -->
+  <rect x="35" y="405" width="530" height="235" fill="#fdfdfa" stroke="#999" stroke-dasharray="4,2" />
+  <text x="50" y="428" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#2b4c2b">APPLICATION PROCEDURE &amp; POSTAL GUIDELINES:</text>
+  <text x="50" y="450" font-family="'Times New Roman', serif" font-size="11" fill="#222">1. Form must be submitted in the official A4 format only with all columns properly filled.</text>
+  <text x="50" y="470" font-family="'Times New Roman', serif" font-size="11" fill="#222">2. Affix two latest passport size photos (one on form, one attached with pin).</text>
+  <text x="50" y="490" font-family="'Times New Roman', serif" font-size="11" fill="#222">3. Attach self-attested photocopies of education certificates, caste and domicile certificates.</text>
+  <text x="50" y="510" font-family="'Times New Roman', serif" font-size="11" fill="#222">4. Envelope must clearly state: "APPLICATION FOR THE POST OF [POST NAME]".</text>
+  <text x="50" y="535" font-family="'Times New Roman', serif" font-size="11" fill="#c00" font-weight="bold">LAST DATE FOR RECEIPT OF APPLICATIONS: 20-12-2026</text>
+
+  <!-- Address Box -->
+  <rect x="50" y="550" width="500" height="75" fill="#f0f6f0" stroke="#2b4c2b" stroke-width="1" />
+  <text x="65" y="570" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#2b4c2b">Address of Dispatch (Registered / Speed Post):</text>
+  <text x="65" y="590" font-family="'Times New Roman', serif" font-size="11" fill="#222">The Commandant, Military Hospital Jabalpur,</text>
+  <text x="65" y="608" font-family="'Times New Roman', serif" font-size="11" fill="#222">Cantt Area, Jabalpur, Madhya Pradesh - Pin: 482001</text>
+
+  <circle cx="515" cy="690" r="30" fill="none" stroke="#2b4c2b" stroke-width="2" />
+  <text x="515" y="694" font-family="Arial, sans-serif" font-size="7.5" font-weight="bold" fill="#2b4c2b" text-anchor="middle">MILITARY HOSPITAL</text>
+  <text x="40" y="695" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#444">Official Notice Reference: MH/JBL/CIV/2026/04</text>
+  <text x="40" y="712" font-family="'Times New Roman', serif" font-size="10" fill="#777">Download authenticated physical application format here</text>
+</svg>

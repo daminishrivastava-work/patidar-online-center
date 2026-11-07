@@ -1,12 +1,12 @@
 import { getCollection } from "astro:content";
+import categoryJobs from "@/config/category_jobs.json";
+import offlineForms from "@/config/offline_forms.json";
 
 export async function GET({ request }) {
   const forms = await getCollection("forms");
   const vacancies = await getCollection("vacancies");
   const services = await getCollection("services");
 
-  // Format data for search
-  // Including hardcoded dummy services from services.astro just in case the collection is empty
   let searchData = [];
   
   if (forms) {
@@ -27,7 +27,27 @@ export async function GET({ request }) {
     }))];
   }
 
-  // Adding the default services mentioned in services.astro
+  // Add Category Jobs (MP & Central Govt)
+  if (categoryJobs) {
+    searchData = [...searchData, ...categoryJobs.map(j => ({
+      title: `${j.title_en} / ${j.title_hi}`,
+      category: j.categoryLabel_en,
+      type: "job",
+      url: `/en/vacancies`
+    }))];
+  }
+
+  // Add Offline / Manual Forms
+  if (offlineForms) {
+    searchData = [...searchData, ...offlineForms.map(o => ({
+      title: `${o.postName} - ${o.organization} (Offline Form ₹${o.price})`,
+      category: "Offline / Postal Form",
+      type: "offline-form",
+      url: `/en/forms#offline-forms`
+    }))];
+  }
+
+  // Adding default services
   const defaultServices = [
     { title: "Income Certificate", category: "Certificate Services" },
     { title: "Caste Certificate", category: "Certificate Services" },

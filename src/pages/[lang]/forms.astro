@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { t } from "@/utils/translations";
 import config from "@/config/config.json";
-
+import OfflineFormsStore from "@/components/OfflineFormsStore.astro";
 import { getCollection } from "astro:content";
 
 export function getStaticPaths() {
@@ -13,10 +13,10 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const currentLang = (lang === 'hi' || lang === 'en') ? lang : 'en';
 
 const formsData = await getCollection("forms");
 const forms = formsData.map(f => f.data);
-// Fallback if empty
 if (forms.length === 0) {
   forms.push(
     { title: "MP State Scholarship 2026", category: "Scholarship", endDate: "2026-10-31" },
@@ -27,35 +27,60 @@ if (forms.length === 0) {
 ---
 
 <Base>
-  <section class="section pt-14">
-    <div class="container text-center mb-12">
-      <h1 class="text-h2 text-primary font-bold">{t(lang, 'nav.forms')}</h1>
+  <!-- Page Header -->
+  <section class="section pt-12 pb-6 bg-light/50 border-b border-border">
+    <div class="container text-center">
+      <h1 class="text-h2 text-primary font-black mb-2">{t(currentLang, 'nav.forms')}</h1>
+      <p class="text-text-light text-sm md:text-base max-w-xl mx-auto">
+        {currentLang === 'hi' 
+          ? 'सरकारी एवं निजी नौकरियों के ऑनलाइन एवं ऑफलाइन (डाक) आवेदन फॉर्म डाउनलोड करें।' 
+          : 'Download printable physical offline forms and access online application forms.'}
+      </p>
     </div>
+  </section>
 
+  <!-- 1. Offline / Manual Job Application Form Store -->
+  <OfflineFormsStore lang={currentLang} />
+
+  <!-- 2. Online Forms Directory -->
+  <section class="section py-14 bg-light/30">
     <div class="container">
+      <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 class="text-2xl font-bold text-dark">
+            {currentLang === 'hi' ? 'सामान्य ऑनलाइन फॉर्म एवं योजनाएं' : 'General Online Forms & Schemes'}
+          </h2>
+          <p class="text-xs sm:text-sm text-text-light">
+            {currentLang === 'hi' ? 'ऑनलाइन आवेदन करने हेतु नीचे दी गई सूची देखें' : 'Direct link to online application forms'}
+          </p>
+        </div>
+      </div>
+
       <div class="bg-white rounded-2xl shadow-sm border border-border p-6 overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
-            <tr class="bg-light text-dark">
-              <th class="p-4 rounded-tl-lg font-bold">{t(lang, 'common.formName')}</th>
-              <th class="p-4 font-bold">{t(lang, 'common.category')}</th>
-              <th class="p-4 font-bold">{t(lang, 'common.lastDate')}</th>
-              <th class="p-4 rounded-tr-lg font-bold">{t(lang, 'common.action')}</th>
+            <tr class="bg-light text-dark text-xs sm:text-sm">
+              <th class="p-4 rounded-tl-lg font-bold">{t(currentLang, 'common.formName')}</th>
+              <th class="p-4 font-bold">{t(currentLang, 'common.category')}</th>
+              <th class="p-4 font-bold">{t(currentLang, 'common.lastDate')}</th>
+              <th class="p-4 rounded-tr-lg font-bold">{t(currentLang, 'common.action')}</th>
             </tr>
           </thead>
           <tbody>
             {forms.map(form => (
-              <tr class="border-b border-border hover:bg-light/50 transition-colors">
+              <tr class="border-b border-border hover:bg-light/50 transition-colors text-xs sm:text-sm">
                 <td class="p-4 font-medium text-dark">{form.title}</td>
-                <td class="p-4 text-text-light"><span class="bg-primary-light/10 text-primary px-3 py-1 rounded-full text-xs font-bold">{form.category}</span></td>
+                <td class="p-4 text-text-light">
+                  <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold">{form.category}</span>
+                </td>
                 <td class="p-4 text-secondary font-semibold">{new Date(form.endDate).toLocaleDateString()}</td>
                 <td class="p-4">
-                  <div class="flex flex-col gap-2">
-                    <a target="_blank" rel="noopener noreferrer" href={`https://wa.me/91${config.params.whatsapp_number.replace(/\\D/g, '')}?text=Hello,%20I%20need%20information%20about%20${encodeURIComponent(form.title)}%20and%20want%20to%20get%20this%20work%20done.`} class="btn btn-primary btn-sm whitespace-nowrap">
-                      {t(lang, 'common.requestService')}
+                  <div class="flex flex-wrap items-center gap-2">
+                    <a target="_blank" rel="noopener noreferrer" href={`https://wa.me/91${config.params.whatsapp_number.replace(/\\D/g, '')}?text=Hello,%20I%20need%20information%20about%20${encodeURIComponent(form.title)}%20and%20want%20to%20get%20this%20work%20done.`} class="btn btn-primary btn-sm whitespace-nowrap text-xs">
+                      {t(currentLang, 'common.requestService')}
                     </a>
                     {form.youtubeGuideUrl && (
-                      <a href={form.youtubeGuideUrl} target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm whitespace-nowrap text-red-600 border-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1">
+                      <a href={form.youtubeGuideUrl} target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm whitespace-nowrap text-red-600 border-red-600 hover:bg-red-600 hover:text-white flex items-center justify-center gap-1 text-xs">
                         <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                         Watch Guide
                       </a>

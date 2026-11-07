@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="100%" height="100%">
+  <!-- Paper Background -->
+  <rect width="600" height="750" fill="#fcfbf7" stroke="#d4cbba" stroke-width="3" />
+  <rect x="15" y="15" width="570" height="720" fill="none" stroke="#1a2e40" stroke-width="2" />
+  <rect x="19" y="19" width="562" height="712" fill="none" stroke="#1a2e40" stroke-width="0.8" />
+
+  <!-- Header Strip -->
+  <rect x="20" y="20" width="560" height="35" fill="#e8edf2" />
+  <text x="30" y="42" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#333" letter-spacing="1">EMPLOYMENT NEWS / DEFENCE VACANCIES</text>
+  <text x="460" y="42" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#666">DAVP: 10801/11/0022</text>
+  <line x1="20" y1="55" x2="580" y2="55" stroke="#1a2e40" stroke-width="1.5" />
+
+  <!-- Organization Header -->
+  <text x="300" y="90" font-family="'Times New Roman', serif" font-size="22" font-weight="900" fill="#1a2e40" text-anchor="middle">INDIAN AIR FORCE (IAF)</text>
+  <text x="300" y="112" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#003366" text-anchor="middle">AIR FORCE STATION MAHARAJPUR, GWALIOR (M.P.)</text>
+  <text x="300" y="130" font-family="'Times New Roman', serif" font-size="11" fill="#555" text-anchor="middle">HQ Central Air Command, Recruitment of Group 'C' Civilian Posts</text>
+
+  <line x1="35" y1="140" x2="565" y2="140" stroke="#1a2e40" stroke-width="2" />
+
+  <!-- Headline -->
+  <rect x="35" y="148" width="530" height="32" fill="#1a2e40" />
+  <text x="300" y="170" font-family="'Times New Roman', serif" font-size="13.5" font-weight="bold" fill="#ffffff" text-anchor="middle">OFFLINE APPLICATION FOR GROUP 'C' CIVILIAN RECRUITMENT 2026</text>
+
+  <!-- Notice Body -->
+  <text x="40" y="202" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    Applications are invited in the prescribed format from eligible male/female citizens of India
+  </text>
+  <text x="40" y="218" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    for filling up civilian vacancies at Air Force Station Maharajpur, Gwalior (Madhya Pradesh):
+  </text>
+
+  <!-- Vacancy Table -->
+  <rect x="35" y="235" width="530" height="150" fill="#fff" stroke="#333" stroke-width="1" />
+  <rect x="35" y="235" width="530" height="30" fill="#e8edf2" />
+  <line x1="35" y1="265" x2="565" y2="265" stroke="#333" stroke-width="1.5" />
+
+  <line x1="85" y1="235" x2="85" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="280" y1="235" x2="280" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="410" y1="235" x2="410" y2="385" stroke="#333" stroke-width="1" />
+
+  <text x="60" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">S.No.</text>
+  <text x="180" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Designation of Post</text>
+  <text x="345" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Essential Qualification</text>
+  <text x="487" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">Pay Scale &amp; Age</text>
+
+  <!-- Row 1 -->
+  <text x="60" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">01.</text>
+  <text x="95" y="290" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">Multi-Tasking Staff (MTS)</text>
+  <text x="290" y="290" font-family="'Times New Roman', serif" font-size="10.5">Matriculation (10th Pass)</text>
+  <text x="487" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">Level-1 | 18-25 Yrs</text>
+  <line x1="35" y1="305" x2="565" y2="305" stroke="#ddd" stroke-width="1" />
+
+  <!-- Row 2 -->
+  <text x="60" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">02.</text>
+  <text x="95" y="330" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">Mess Staff / Cook</text>
+  <text x="290" y="330" font-family="'Times New Roman', serif" font-size="10.5">10th Pass + Catering experience</text>
+  <text x="487" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">Level-2 | 18-25 Yrs</text>
+  <line x1="35" y1="345" x2="565" y2="345" stroke="#ddd" stroke-width="1" />
+
+  <!-- Row 3 -->
+  <text x="60" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">03.</text>
+  <text x="95" y="370" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">House Keeping Staff (HKS)</text>
+  <text x="290" y="370" font-family="'Times New Roman', serif" font-size="10.5">10th Standard Pass</text>
+  <text x="487" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">Level-1 | 18-25 Yrs</text>
+
+  <!-- Instructions -->
+  <rect x="35" y="405" width="530" height="235" fill="#fefdf9" stroke="#999" stroke-dasharray="4,2" />
+  <text x="50" y="428" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#1a2e40">IMPORTANT POSTAL INSTRUCTIONS &amp; GUIDELINES:</text>
+  <text x="50" y="450" font-family="'Times New Roman', serif" font-size="11" fill="#222">1. Application must be typed/handwritten in clear Hindi or English on A4 paper format.</text>
+  <text x="50" y="470" font-family="'Times New Roman', serif" font-size="11" fill="#222">2. Affix one passport photo self-attested and attach another photo with name on back.</text>
+  <text x="50" y="490" font-family="'Times New Roman', serif" font-size="11" fill="#222">3. Enclose one self-addressed envelope with ₹10 postage stamp.</text>
+  <text x="50" y="510" font-family="'Times New Roman', serif" font-size="11" fill="#222">4. Envelope must be super-scribed: "APPLICATION FOR THE POST OF _____ AND CATEGORY _____".</text>
+  <text x="50" y="535" font-family="'Times New Roman', serif" font-size="11" fill="#c00" font-weight="bold">CLOSING DATE: 30 DAYS FROM ADVERTISEMENT (LAST DATE: 05-12-2026)</text>
+
+  <!-- Address Box -->
+  <rect x="50" y="550" width="500" height="75" fill="#f0f4f8" stroke="#1a2e40" stroke-width="1" />
+  <text x="65" y="570" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#1a2e40">Address of Postal Delivery:</text>
+  <text x="65" y="590" font-family="'Times New Roman', serif" font-size="11" fill="#222">Air Officer Commanding, Air Force Station Maharajpur,</text>
+  <text x="65" y="608" font-family="'Times New Roman', serif" font-size="11" fill="#222">Gwalior, Madhya Pradesh - Pin Code: 474020</text>
+
+  <circle cx="515" cy="690" r="30" fill="none" stroke="#1a2e40" stroke-width="2" />
+  <text x="515" y="694" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#1a2e40" text-anchor="middle">INDIAN AIR FORCE</text>
+
+  <text x="40" y="695" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#444">Official Notice Reference: EN/IAF/GWL/2026/02</text>
+  <text x="40" y="712" font-family="'Times New Roman', serif" font-size="10" fill="#777">Complete print-ready application format with biodata proforma</text>
+</svg>

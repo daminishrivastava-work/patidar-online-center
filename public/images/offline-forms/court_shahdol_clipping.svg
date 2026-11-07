@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="100%" height="100%">
+  <rect width="600" height="750" fill="#fdfbf7" stroke="#d4cbba" stroke-width="3" />
+  <rect x="15" y="15" width="570" height="720" fill="none" stroke="#600" stroke-width="2" />
+  <rect x="19" y="19" width="562" height="712" fill="none" stroke="#600" stroke-width="0.8" />
+
+  <rect x="20" y="20" width="560" height="35" fill="#f5ebeb" />
+  <text x="30" y="42" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#600" letter-spacing="1">कार्यालय जिला एवं सत्र न्यायाधीश, शहडोल (म.प्र.)</text>
+  <text x="470" y="42" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#666">क्रमांक 412/स्था./26</text>
+  <line x1="20" y1="55" x2="580" y2="55" stroke="#600" stroke-width="1.5" />
+
+  <text x="300" y="90" font-family="'Times New Roman', serif" font-size="20" font-weight="900" fill="#600" text-anchor="middle">जिला एवं सत्र न्यायालय शहडोल (मध्य प्रदेश)</text>
+  <text x="300" y="112" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#222" text-anchor="middle">आकस्मिकता निधि एवं कलेक्टर दर कर्मचारी भर्ती विज्ञापन 2026</text>
+  <text x="300" y="130" font-family="'Times New Roman', serif" font-size="11" fill="#555" text-anchor="middle">न्यायालय परिसर, बुढ़ार रोड, शहडोल - 484001</text>
+  <line x1="35" y1="140" x2="565" y2="140" stroke="#600" stroke-width="2" />
+
+  <rect x="35" y="148" width="530" height="32" fill="#600" />
+  <text x="300" y="170" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">चतुर्थ श्रेणी भृत्य / चौकीदार / वाहन चालक ऑफलाइन भर्ती</text>
+
+  <text x="40" y="202" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    जिला न्यायालय शहडोल स्थापना अंतर्गत निम्नलिखित रिक्त पदों की पूर्ति हेतु मध्य प्रदेश के मूल निवासियों से
+  </text>
+  <text x="40" y="218" font-family="'Times New Roman', serif" font-size="12" fill="#111">
+    ऑफलाइन निर्धारित प्रारूप में आवेदन पत्र आमंत्रित किए जाते हैं:
+  </text>
+
+  <!-- Vacancy Table -->
+  <rect x="35" y="235" width="530" height="150" fill="#fff" stroke="#333" stroke-width="1" />
+  <rect x="35" y="235" width="530" height="30" fill="#f8e8e8" />
+  <line x1="35" y1="265" x2="565" y2="265" stroke="#333" stroke-width="1.5" />
+  <line x1="85" y1="235" x2="85" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="280" y1="235" x2="280" y2="385" stroke="#333" stroke-width="1" />
+  <line x1="410" y1="235" x2="410" y2="385" stroke="#333" stroke-width="1" />
+
+  <text x="60" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">क्र.</text>
+  <text x="180" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">पद का नाम</text>
+  <text x="345" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">न्यूनतम शैक्षणिक योग्यता</text>
+  <text x="487" y="255" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" text-anchor="middle">आयु सीमा (वर्ष)</text>
+
+  <text x="60" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">01.</text>
+  <text x="95" y="290" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">भृत्य / चौकीदार / जलवाहक</text>
+  <text x="290" y="290" font-family="'Times New Roman', serif" font-size="10.5">कक्षा 8वीं उत्तीर्ण</text>
+  <text x="487" y="290" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18 से 40 वर्ष</text>
+  <line x1="35" y1="305" x2="565" y2="305" stroke="#ddd" stroke-width="1" />
+
+  <text x="60" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">02.</text>
+  <text x="95" y="330" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">वाहन चालक (Driver)</text>
+  <text x="290" y="330" font-family="'Times New Roman', serif" font-size="10.5">10वीं उत्तीर्ण + LMV ड्राइविंग लाइसेंस</text>
+  <text x="487" y="330" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18 से 40 वर्ष</text>
+  <line x1="35" y1="345" x2="565" y2="345" stroke="#ddd" stroke-width="1" />
+
+  <text x="60" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">03.</text>
+  <text x="95" y="370" font-family="'Times New Roman', serif" font-size="11" font-weight="bold">स्वीपर (सफाई कर्मचारी)</text>
+  <text x="290" y="370" font-family="'Times New Roman', serif" font-size="10.5">कक्षा 5वीं / 8वीं उत्तीर्ण</text>
+  <text x="487" y="370" font-family="'Times New Roman', serif" font-size="11" text-anchor="middle">18 से 40 वर्ष</text>
+
+  <!-- Instructions -->
+  <rect x="35" y="405" width="530" height="235" fill="#fffdfb" stroke="#999" stroke-dasharray="4,2" />
+  <text x="50" y="428" font-family="'Times New Roman', serif" font-size="12" font-weight="bold" fill="#600">आवेदन जमा करने के आवश्यक नियम एवं दिशा-निर्देश:</text>
+  <text x="50" y="450" font-family="'Times New Roman', serif" font-size="11" fill="#222">1. आवेदन पत्र केवल निर्धारित फॉर्मेट में ही स्वीकार किया जाएगा।</text>
+  <text x="50" y="470" font-family="'Times New Roman', serif" font-size="11" fill="#222">2. रोजगार कार्यालय (म.प्र.) का जीवित पंजीयन होना अनिवार्य है।</text>
+  <text x="50" y="490" font-family="'Times New Roman', serif" font-size="11" fill="#222">3. आवेदन पत्र के साथ समस्त अंकसूचियों, जाति, मूल निवास प्रमाण पत्र की स्व-प्रमाणित प्रति संलग्न करें।</text>
+  <text x="50" y="510" font-family="'Times New Roman', serif" font-size="11" fill="#222">4. आवेदन पत्र व्यक्तिगत रूप से ड्रॉप बॉक्स में अथवा पंजीकृत डाक द्वारा भेजा जा सकता है।</text>
+  <text x="50" y="535" font-family="'Times New Roman', serif" font-size="11" fill="#c00" font-weight="bold">अंतिम तिथि: 12 दिसंबर 2026 (शाम 5:00 बजे तक)</text>
+
+  <!-- Address Box -->
+  <rect x="50" y="550" width="500" height="75" fill="#fbf0f0" stroke="#600" stroke-width="1" />
+  <text x="65" y="570" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#600">आवेदन भेजने का पता:</text>
+  <text x="65" y="590" font-family="'Times New Roman', serif" font-size="11" fill="#222">कार्यालय प्रधान जिला एवं सत्र न्यायाधीश,</text>
+  <text x="65" y="608" font-family="'Times New Roman', serif" font-size="11" fill="#222">जिला न्यायालय परिसर, शहडोल, मध्य प्रदेश - पिन 484001</text>
+
+  <circle cx="515" cy="690" r="30" fill="none" stroke="#600" stroke-width="2" />
+  <text x="515" y="694" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#600" text-anchor="middle">DISTRICT COURT</text>
+  <text x="40" y="695" font-family="'Times New Roman', serif" font-size="11" font-weight="bold" fill="#444">विज्ञापन सूचना क्र: 412/स्थापना/शहडोल/2026</text>
+  <text x="40" y="712" font-family="'Times New Roman', serif" font-size="10" fill="#777">फॉर्म डाउनलोड हेतु पाटीदार ऑनलाइन सेंटर शहडोल पर संपर्क करें</text>
+</svg>
